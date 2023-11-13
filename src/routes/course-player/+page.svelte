@@ -8,7 +8,7 @@
     export let data: PageData;
 </script>
 
-<AppShell slotSidebarLeft="bg-surface-500/50 w-0 lg:w-auto lg:min-w-[24rem]">
+<AppShell slotSidebarLeft="bg-surface-500/50 w-0 lg:w-auto lg:min-w-[24rem] shadow-xl">
 	<svelte:fragment slot="header">
 		<Header />
 	</svelte:fragment>
