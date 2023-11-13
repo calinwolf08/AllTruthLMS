@@ -10,7 +10,7 @@ interface Section {
     name : string;
 }
 
-interface Lesson {
+export interface Lesson {
     sections : Section[];
     name : string;
 }

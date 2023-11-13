@@ -2,10 +2,11 @@
 	import { onMount } from 'svelte';
 
 	import { TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
-	import { createTestLesson, type Activity } from '$lib/CoursePlayer/ActivityStructure'
-	import { currentActivity } from './stores';
+	import type {Activity} from "./ActivityStructure";
+    import type {Lesson} from "./ActivityStructure";
 
-	const lesson = createTestLesson();
+	export let lesson : Lesson;
+
 	let treeView : TreeView;
 	let treeExpanded = false;
 

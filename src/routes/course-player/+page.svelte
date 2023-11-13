@@ -1,9 +1,13 @@
 <script lang="ts">
     import type { PageData } from './$types';
 	import { AppShell } from '@skeletonlabs/skeleton';
+
 	import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
 	import Header from '$lib/CoursePlayer/Header.svelte';
 	import Activity from '$lib/CoursePlayer/ActivityView.svelte';
+	import { createTestLesson} from '$lib/CoursePlayer/ActivityStructure';
+
+	let lesson = createTestLesson();
 
     export let data: PageData;
 </script>
@@ -13,14 +17,14 @@
 		<Header />
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
-		<TableOfContents />
+		<TableOfContents {lesson}/>
 	</svelte:fragment>
 
 	<!-- (sidebarRight) -->
 	<!-- (pageHeader) -->
 
 	<!-- ---- / ---- -->
-	<Activity />
+	<Activity {lesson}/>
 	<!-- ---- / ---- -->
 	
 	<!-- (pageFooter) -->

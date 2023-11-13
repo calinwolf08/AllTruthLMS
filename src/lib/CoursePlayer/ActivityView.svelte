@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Scorm from "$lib/ActivityTypes/Scorm.svelte";
     // import type {Activity} from "./ActivityStructure";
-    // export let activity : Activity;
+    import type {Lesson} from "./ActivityStructure";
+    
+    export let lesson : Lesson;
 
 </script>
 
