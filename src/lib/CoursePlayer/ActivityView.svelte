@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Scorm from "$lib/ActivityTypes/Scorm.svelte";
+	import { getContext } from "svelte";
     // import type {Activity} from "./ActivityStructure";
-    import type {Lesson} from "./ActivityStructure";
+    import type {Course} from "./ActivityStructure";
     
-    export let lesson : Lesson;
+    const course : Course = getContext('course');
 
 </script>
 

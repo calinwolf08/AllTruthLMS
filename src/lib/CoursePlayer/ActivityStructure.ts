@@ -10,9 +10,12 @@ interface Section {
     name : string;
 }
 
-export interface Lesson {
+export interface Course {
+    course_id : number;
     sections : Section[];
     name : string;
+    isComplete : boolean;
+    currentActivity: number; 
 }
 
 let createActivity = function(name: string) : Activity {
@@ -23,7 +26,7 @@ let createSection = function(name: string) : Section {
     return { activities: [], name: name };
 }
 
-export const createTestLesson = function() : Lesson {
+export const createTestCourse = function() : Course {
     let a1 = createActivity("a1"), a2 = createActivity("a2"), a3 = createActivity("a3");
     let a4 = createActivity("a4"), a5 = createActivity("a5");
     
@@ -33,5 +36,5 @@ export const createTestLesson = function() : Lesson {
     s2.activities = [a3, a4];
     s3.activities = [a5];
     
-    return { sections: [s1,s2,s3], name: "lesson" };
+    return { sections: [s1,s2,s3], name: "course", isComplete: false, currentActivity: 0, course_id: 1 };
 }

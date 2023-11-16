@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
 
 	import { TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
 	import type {Activity} from "./ActivityStructure";
-    import type {Lesson} from "./ActivityStructure";
+    import type {Course} from "./ActivityStructure";
 
-	export let lesson : Lesson;
+	// const course2 : Course = getContext('course');
+	export let course : Course;
 
 	let treeView : TreeView;
 	let treeExpanded = false;
@@ -26,8 +27,8 @@
 </script>
 
 <div style="display:{treeExpanded ? '' : 'none'}">
-<TreeView bind:this={treeView} padding = "py-4 pr-4 pl-10 lessonTree">
-		{#each lesson.sections as section}
+	<TreeView bind:this={treeView} padding = "py-4 pr-4 pl-10 lessonTree">
+		{#each course.sections as section}
 		
 		<TreeViewItem>
 			{section.name}

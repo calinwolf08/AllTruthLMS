@@ -16,8 +16,6 @@
             });
 
             (window as any).API.on("LMSSetValue.cmi.core.*", () => {
-                console.log("something changed:");
-                console.log((window as any).API.cmi.core.lesson_status);
             });
         });
     });

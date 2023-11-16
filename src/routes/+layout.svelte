@@ -21,7 +21,7 @@
 </script>
 
 <Drawer>
-	<TableOfContents />
+	<TableOfContents course={$drawerStore.meta} />
 </Drawer>
 
 <slot />

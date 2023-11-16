@@ -1,5 +1,5 @@
 
-import type { DrawerStore } from '@skeletonlabs/skeleton';
+import type { DrawerSettings, DrawerStore } from '@skeletonlabs/skeleton';
 
 export class DrawerController {
     private drawerStore: DrawerStore;
@@ -8,7 +8,7 @@ export class DrawerController {
         this.drawerStore = drawerStore;
     }
     
-    openDrawer() : void {
-        this.drawerStore.open();
-    };
+    openDrawer(settings: DrawerSettings) : void {
+        this.drawerStore.open(settings);
+    }; 
 }

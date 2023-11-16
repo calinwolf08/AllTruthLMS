@@ -1,15 +1,26 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
+    import { getContext, type ComponentConstructorOptions } from 'svelte';
     import type {DrawerController} from '$lib/DrawerController';
+	import type { Course } from './ActivityStructure';
+    import TableOfContents from './TableOfContents.svelte';
 
     const drawerController : DrawerController = getContext('drawerController');
+    const course : Course = getContext('course');
+    
+    let button: HTMLButtonElement;
 
     function openDrawer() : void {
-        drawerController.openDrawer();
+        const drawerSettings = {
+            id: "course-navigation",
+            meta: course
+        }
+        
+        drawerController.openDrawer(drawerSettings);
     }
+
 </script>
 
-<button class="lg:hidden btn btn-sm mr-4" on:click= {openDrawer}>
+<button bind:this={button} class="lg:hidden btn btn-sm mr-4" on:click= {openDrawer}>
     <span>
         <svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
             <rect width="100" height="20" />
