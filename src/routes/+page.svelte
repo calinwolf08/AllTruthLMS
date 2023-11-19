@@ -5,4 +5,3 @@
 		<a class="btn btn-lg variant-filled" href="\course-player\x01">Course 1</a>
 	</div>
 </div>
-

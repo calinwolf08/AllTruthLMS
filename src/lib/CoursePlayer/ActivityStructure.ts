@@ -2,6 +2,7 @@ import type { TreeViewNode } from "@skeletonlabs/skeleton";
 
 export interface Activity {
     isComplete : boolean;
+    isSelected: boolean;
     name : string;
 }
 
@@ -18,8 +19,8 @@ export interface Course {
     currentActivity: number; 
 }
 
-let createActivity = function(name: string) : Activity {
-    return { isComplete: false, name: name };
+let createActivity = function(name: string, isSelected: boolean = false) : Activity {
+    return { isComplete: false, isSelected: isSelected, name: name };
 }
 
 let createSection = function(name: string) : Section {
@@ -35,6 +36,9 @@ export const createTestCourse = function() : Course {
     s1.activities = [a1, a2];
     s2.activities = [a3, a4];
     s3.activities = [a5];
+
+    console.log('here:');
+    console.log(s1);
     
-    return { sections: [s1,s2,s3], name: "course", isComplete: false, currentActivity: 0, course_id: 1 };
+    return { sections: [s1,s2,s3], name: "course", isComplete: false, currentActivity: 1, course_id: 1 };
 }

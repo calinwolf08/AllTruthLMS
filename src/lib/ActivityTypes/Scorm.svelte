@@ -12,7 +12,7 @@
             (window as any).API = scormApi;
 
             (window as any).API.on("LMSInitialize", () => {
-                console.log("initialize");
+                // console.log("initialize");
             });
 
             (window as any).API.on("LMSSetValue.cmi.core.*", () => {

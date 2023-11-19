@@ -4,7 +4,7 @@
 
 	import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
 	import Header from '$lib/CoursePlayer/Header.svelte';
-	import Activity from '$lib/CoursePlayer/ActivityView.svelte';
+	import ActivityView from '$lib/CoursePlayer/ActivityView.svelte';
 	import { setContext } from 'svelte';
 
     export let data: PageData;
@@ -23,7 +23,7 @@
 	<!-- (pageHeader) -->
 
 	<!-- ---- / ---- -->
-	<Activity />
+	<ActivityView />
 	<!-- ---- / ---- -->
 	
 	<!-- (pageFooter) -->

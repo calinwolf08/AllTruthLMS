@@ -1,52 +1,67 @@
 <script lang="ts">
-	import { getContext, onMount } from 'svelte';
-
 	import { TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
 	import type {Activity} from "./ActivityStructure";
     import type {Course} from "./ActivityStructure";
+	import { ActivityStore } from './stores';
+	import { redirect } from '@sveltejs/kit';
 
-	// const course2 : Course = getContext('course');
 	export let course : Course;
 
-	let treeView : TreeView;
-	let treeExpanded = false;
+	function findSelectedActivity(course: Course) : Activity {
+		for (let section of course.sections) {
+			for (let activity of section.activities) {
+				if (activity.isSelected) {
+					console.log('found one');
+					console.log(activity);
+					return activity;
+				}
+			}
+		}
 
-	onMount(() => {
-		treeView.expandAll();
-		treeExpanded = true;
-	});
+		try {
+			let currentActivity = course.sections[0].activities[0];
+			currentActivity.isSelected = true;
+			console.log("Defaulting to first activity");
 
-	let currentActivityValue : Activity;
-	// currentActivity.set(lesson.sections[0].activities[0]);
-
-	function changeActivity() : void {
-		// update current activity in store
-		// should trigger rerender in body
-		console.log("clicked");
+			return currentActivity;
+		} catch {
+			console.log("course has no activities");
+			throw redirect(300, '/');
+		}
 	}
+
+	let currentActivity : Activity = findSelectedActivity(course);
+
+	function changeActivity(activity: Activity) : void {
+		currentActivity.isSelected = false;
+		activity.isSelected = true;
+
+		ActivityStore.set(activity);
+		currentActivity = activity;
+	}
+	
 </script>
 
-<div style="display:{treeExpanded ? '' : 'none'}">
-	<TreeView bind:this={treeView} padding = "py-4 pr-4 pl-10 lessonTree">
-		{#each course.sections as section}
+<TreeView open hover="hover:variant-soft-primary" class="py-4 px-0">
+	{#each course.sections as section}
+	
+	<TreeViewItem>
+		{section.name}
 		
-		<TreeViewItem>
-			{section.name}
+		<svelte:fragment slot="children">	
+			{#each section.activities as activity, index}
 			
-			<svelte:fragment slot="children">	
-				{#each section.activities as activity}
-				
-				<TreeViewItem on:click={changeActivity}>
-					<svelte:fragment slot="lead">(icon)</svelte:fragment>
-					{activity.name}
-				</TreeViewItem>
-				
-				{/each}
-			</svelte:fragment>
+			<TreeViewItem class={activity == currentActivity ? "bg-primary-500" : ""} 
+			on:click={() => {changeActivity(activity)}}>
+				<svelte:fragment slot="lead">(icon)</svelte:fragment>
+				{activity.name}
+			</TreeViewItem>
 			
-		</TreeViewItem>
+			{/each}
+		</svelte:fragment>
 		
-		{/each}
-	</TreeView>
-</div>
+	</TreeViewItem>
+	
+	{/each}
+</TreeView>
 	
