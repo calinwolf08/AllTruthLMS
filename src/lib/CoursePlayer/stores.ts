@@ -1,3 +1,5 @@
 import { writable } from 'svelte/store';
+import { createDefaultActivity, createDefaultCourse } from './ActivityStructure';
 
-export const ActivityStore = writable();
+export const currentCourse = writable(createDefaultCourse());
+export const currentActivity = writable(createDefaultActivity());
