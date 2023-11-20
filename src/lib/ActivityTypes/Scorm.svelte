@@ -1,13 +1,14 @@
 <script lang="ts">
     import { onMount } from 'svelte';
 
+    export let path: string;
+
     let scormApi:any = undefined;
     
     onMount(() => {
-        console.log('the component is about to update: ' + window);
-        
         import("scorm-again").then((value) => {
             let settings = {};
+            // @ts-ignore
             scormApi = new Scorm12API(settings);
             (window as any).API = scormApi;
 
@@ -19,10 +20,8 @@
             });
         });
     });
-
-    let scormLocation = "/TestBridge/index_lms.html";
 </script>
 
 {#if scormApi }
-    <iframe src={scormLocation} class="h-full w-full block overflow-hidden" title="videoLesson" ></iframe>
+    <iframe src={path} class="h-full w-full block overflow-hidden" title="videoLesson" ></iframe>
 {/if}

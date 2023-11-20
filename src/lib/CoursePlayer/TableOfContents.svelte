@@ -24,7 +24,7 @@
 	{#each $currentCourse.sections as section}
 	
 	<TreeViewItem>
-		{section.name}
+		{section.title}
 		
 		<svelte:fragment slot="children">	
 			{#each section.activities as activity}
@@ -33,7 +33,7 @@
 			class={getTreeClassForActivity(activity.activityId)} 
 			on:click={() => {changeActivity(activity)}}>
 				<svelte:fragment slot="lead">(icon)</svelte:fragment>
-				{activity.name}
+				{activity.title}
 			</TreeViewItem>
 			
 			{/each}

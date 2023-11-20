@@ -9,8 +9,9 @@
 	import { findCurrentActivity } from '$lib/CoursePlayer/ActivityStructure';
 
     export let data: PageData;
-	$currentActivity = findCurrentActivity(data.course);
+	console.log(data.course);
 	$currentCourse = data.course;
+	$currentActivity = findCurrentActivity(data.course);
 
 </script>
 

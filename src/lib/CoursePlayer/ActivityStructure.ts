@@ -1,81 +1,85 @@
 import type { TreeViewNode } from "@skeletonlabs/skeleton";
 import { redirect } from "@sveltejs/kit";
+import type { HtmlTagDescriptor } from "vite";
 
-type ActivityId = number;
-type SectionId = number;
-type CourseId = number;
-
-type SCORM_Activity = {
-    path: string
+export enum ActivityType {
+    SCORM = "SCORM",
+    HTML = "HTML",
+    TEST = "TEST"
 }
 
-type HTML_Activity = {
-    value: string
-}
-
-export type Activity = 
-{
-    activityId: ActivityId
-    isComplete: boolean,
-    name: string,
-} & ({
-    settings: SCORM_Activity
+// type ActivityData = string | number;
+type ActivityData = {
+    type: ActivityType.SCORM
+    value: string;
 } | {
-    settings: HTML_Activity
-});
+    type: ActivityType.HTML
+    value: string
+} | {
+    type: ActivityType.TEST
+    value: number
+};
 
-// export interface Activity {
-//     activityId: ActivityId;
-//     isComplete : boolean;
-//     name : string;
-// }
+export interface Activity {
+    activityId: number;
+    isComplete: boolean;
+    title: string;
+    data: ActivityData
+}
 
 interface Section {
-    sectionId: SectionId;
+    sectionId: number;
     activities : Activity[];
-    name : string;
+    title : string;
 }
 
 export interface Course {
-    courseId : CourseId;
-    sections : Section[];
-    name : string;
-    isComplete : boolean;
+    courseId: number;
+    sections: Section[];
+    title: string;
+    isComplete: boolean;
     currentActivityId: number;
 }
 
-let createActivity = function(name: string, activityId: ActivityId) : Activity {
-    return { activityId: activityId, isComplete: false, name: name, settings: {path: ""} };
+let createActivity = function(title: string, activityId: number) : Activity {
+    return {
+        activityId: activityId, 
+        isComplete:false, 
+        title:title, 
+        data: {value:"<p>Activity: " + activityId.toString() + "</p>", type: ActivityType.HTML}
+    };
 }
 
-let createSection = function(name: string, sectionId: SectionId) : Section {
-    return { sectionId: sectionId, activities: [], name: name };
+let createSection = function(title: string, sectionId: number) : Section {
+    return { sectionId: sectionId, activities: [], title: title };
 }
 
 export const createTestCourse = function() : Course {
     let a1 = createActivity("a1", 0), a2 = createActivity("a2", 1), a3 = createActivity("a3", 2);
     let a4 = createActivity("a4", 5), a5 = createActivity("a5", 4);
 
-    switch (a2.type) {
-        case "SCORM":
-        case "HTML":
-    }
-    
+    a2.data = {type: ActivityType.SCORM, value:"/TestBridge/index_lms.html"};
+
     let s1 = createSection("s1", 0), s2 = createSection("s2", 1), s3 = createSection("s3", 2);
-    
+
     s1.activities = [a1, a2];
     s2.activities = [a3, a4];
     s3.activities = [a5];
     
-    return { sections: [s1,s2,s3], name: "course", isComplete: false, currentActivityId: 1, courseId: 1 };
+    return { sections: [s1,s2,s3], title: "course", isComplete: false, currentActivityId: 1, courseId: 1 };
 }
 
 export const createDefaultCourse = function() : Course {
-    return {courseId: -1, name:"", isComplete:false, sections:[], currentActivityId:-1};
+    return {courseId: -1, title:"", isComplete:false, sections:[], currentActivityId:-1};
 }
 
 export const createDefaultActivity = function() : Activity {
-    return {activityId: -1, name:"", isComplete:false, type:ActivityType.HTML, value: ""};
+    return {
+        activityId: -1, 
+        isComplete:false, 
+        title:"", 
+        data: {value: "<p>No Activity Loaded</p>", type: ActivityType.HTML}
+    };
 }
 
 export function findCurrentActivity(course: Course) : Activity {
