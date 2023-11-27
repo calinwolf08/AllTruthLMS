@@ -7,11 +7,14 @@
 	import ActivityView from '$lib/CoursePlayer/ActivityView.svelte';
 	import { currentCourse, currentActivity } from '$lib/CoursePlayer/stores';
 	import { findCurrentActivity } from '$lib/CoursePlayer/ActivityStructure';
+	import { setContext } from 'svelte';
 
     export let data: PageData;
-	console.log(data.course);
+	
 	$currentCourse = data.course;
 	$currentActivity = findCurrentActivity(data.course);
+
+	setContext("url", data.url);
 
 </script>
 

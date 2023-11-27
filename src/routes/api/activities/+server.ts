@@ -1,8 +1,7 @@
-import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async (event) => {
-    console.log("In GET");
-    console.log(event);
+export const GET = ({request}) => {
+    const authHeader = request.headers.get('Authorization');
+    console.log(authHeader);
 
-    return new Response("Got Response");
+    return new Response(JSON.stringify({message: "Got Response"}), {status: 200});
 };

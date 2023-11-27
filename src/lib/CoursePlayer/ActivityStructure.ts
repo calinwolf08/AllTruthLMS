@@ -58,7 +58,7 @@ export const createTestCourse = function() : Course {
     let a1 = createActivity("a1", 0), a2 = createActivity("a2", 1), a3 = createActivity("a3", 2);
     let a4 = createActivity("a4", 5), a5 = createActivity("a5", 4);
 
-    a2.data = {type: ActivityType.SCORM, value:"/TestBridge/index_lms.html"};
+    a2.data = {type: ActivityType.SCORM, value:"https://iinyqzjlbioqrpwqrjhh.supabase.co/storage/v1/object/sign/Scorm/TestBridge/index_lms.html?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJTY29ybS9UZXN0QnJpZGdlL2luZGV4X2xtcy5odG1sIiwiaWF0IjoxNzAwNjMzMjU1LCJleHAiOjE3MDEyMzgwNTV9.6woFqFfEVmxcEJf6_yLfGBWo9BFRUuoZr1eMiT0dEag&t=2023-11-22T06%3A07%3A33.987Z"};
 
     let s1 = createSection("s1", 0), s2 = createSection("s2", 1), s3 = createSection("s3", 2);
 

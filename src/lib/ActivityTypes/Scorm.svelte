@@ -1,27 +1,27 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+	import { onMount } from "svelte";
 
     export let path: string;
 
-    let scormApi:any = undefined;
-    
+    let iframe: HTMLIFrameElement;
+
+    function handleMessage(e: MessageEvent) {
+        if (e.data == "LMSInitialize") {
+            console.log("SCORM Initialized");
+        }
+        else if (e.data == "LMSSetValue") {
+            console.log("SCORM SetValue")
+        }
+    }
+
     onMount(() => {
-        import("scorm-again").then((value) => {
-            let settings = {};
-            // @ts-ignore
-            scormApi = new Scorm12API(settings);
-            (window as any).API = scormApi;
+        window.addEventListener('message', handleMessage);
 
-            (window as any).API.on("LMSInitialize", () => {
-                // console.log("initialize");
-            });
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        }
+    })
 
-            (window as any).API.on("LMSSetValue.cmi.core.*", () => {
-            });
-        });
-    });
 </script>
 
-{#if scormApi }
-    <iframe src={path} class="h-full w-full block overflow-hidden" title="videoLesson" ></iframe>
-{/if}
+<iframe bind:this={iframe} src={path} class="h-full w-full p-0 m-0 block overflow-hidden" title="scorm-container"></iframe>
