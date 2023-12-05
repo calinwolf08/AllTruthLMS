@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { PageData } from '../$types';
+    import type { PageData } from './$types';
 	import { AppShell } from '@skeletonlabs/skeleton';
 
 	import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
