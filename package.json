@@ -30,7 +30,6 @@
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte": "^2.30.0",
-    "kysely-codegen": "^0.11.0",
     "postcss": "8.4.31",
     "postgres": "^3.4.3",
     "prettier": "^2.8.0",
@@ -50,6 +49,7 @@
     "@floating-ui/dom": "1.5.3",
     "@supabase/supabase-js": "^2.38.5",
     "kysely": "^0.26.3",
+    "kysely-codegen": "^0.11.0",
     "pg": "^8.11.3",
     "scorm-again": "^1.7.1"
   }

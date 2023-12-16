@@ -1,20 +1,18 @@
 import { createTestCourse } from '$lib/CoursePlayer/ActivityStructure';
 import type { PageServerLoad } from './$types';
 
-import { db } from '$lib/kysely';
 import { supabase } from '$lib/supabase';
+import { findCourse } from '$lib/Models/CourseQueries';
+import type { Course } from '$lib/Models/Course';
 
 let course = createTestCourse();
 
-export const load = (async () => {
-    
-    let url = await supabase.storage.from('Scorm').getPublicUrl('TestVid/index_lms.html');
-    console.log(url);
+export const load = (async ({params}) => {
+    console.log(params.course_id);
 
-    console.log(db.connection.toString());
-    const test = await db.selectFrom('MyTest').selectAll().execute();
-    console.log('hello');
-    console.log(test);
+    let url = await supabase.storage.from('Scorm').getPublicUrl('TestVid/index_lms.html');
+
+    const course: Course = await findCourse(params.course_id);
 
     return {
         course: course,
