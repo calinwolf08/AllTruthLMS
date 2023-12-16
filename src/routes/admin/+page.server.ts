@@ -1,8 +1,9 @@
 import type { PageServerLoad } from './$types';
-import { db, type CourseSelect } from '$lib/kysely/kysely';
+import type { CourseSelect } from '$lib/kysely/kysely';
+import { getAllCourses } from '$lib/Models/CourseQueries';
 
 export const load = (async () => {
-    const courses: CourseSelect[] = await db.selectFrom('course').selectAll().execute();
+    const courses: CourseSelect[] = await getAllCourses();
 
     return {
         courses

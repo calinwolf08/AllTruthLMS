@@ -1,4 +1,4 @@
-import type { CourseSelect } from "$lib/kysely/kysely"
+import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect } from "$lib/kysely/kysely"
 import type { ActivityType } from "kysely-codegen"
 
 export function getEmptyCourse() {
@@ -14,9 +14,7 @@ export type Course = CourseSelect & {
     sections: Section[],
 }
 
-export type Section = {
-    id: string,
-    name: string,
+export type Section = SectionSelect & {
     activities: Activity[]
 }
 
@@ -25,3 +23,6 @@ export type Activity = {
     name: string,
     activity_type: ActivityType
 }
+
+export type ScormActivity = ScormActivitySelect;
+export type VideoActivity = VideoActivitySelect;
