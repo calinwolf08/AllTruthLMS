@@ -4,16 +4,16 @@
 
 	import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
 	import ActivityView from '$lib/CoursePlayer/ActivityView.svelte';
-	import { currentCourse, currentActivity } from '$lib/CoursePlayer/stores';
-	import { findCurrentActivity } from '$lib/CoursePlayer/ActivityStructure';
-	import { setContext } from 'svelte';
+	import { currentActivity, currentCourse } from '$lib/CoursePlayer/stores';
 
     export let data: PageData;
 	
 	$currentCourse = data.course;
-	$currentActivity = findCurrentActivity(data.course);
 
-	setContext("url", data.url);
+	if (data.course.sections.length > 0 && data.course.sections[0].activities.length > 0) {
+		$currentActivity = data.course.sections[0].activities[0];
+	}
+
 
 </script>
 

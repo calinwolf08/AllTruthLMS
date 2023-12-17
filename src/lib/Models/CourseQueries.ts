@@ -1,5 +1,5 @@
 import { db, type CourseSelect, type SectionSelect } from "$lib/kysely/kysely";
-import type { Course, Section, Activity } from "./Course";
+import type { Course, Section, Activity, ScormActivity, VideoActivity } from "./Course";
 import { error } from "@sveltejs/kit";
 
 export async function getAllCourses(): Promise<CourseSelect[]> {
@@ -12,97 +12,60 @@ export async function getAllCourses(): Promise<CourseSelect[]> {
     return courses;
 }
 
-export async function getFullCourse(id: string): Promise<Course | undefined> {
-    
+export async function getFullCourse(id: string): Promise<Course> {
     let courseSelect = await getCourse(id);
-    
-    if (!courseSelect) {
-        error(404, 'Course not found');
-        return undefined;
-    }
-    
     const sections = await getFullSections(id);
     const course = {...courseSelect, sections};
     
     return course;
 }
 
-async function getCourse(id:string): Promise<CourseSelect | undefined> {
-    return await db.selectFrom('course')
+async function getCourse(id:string): Promise<CourseSelect> {
+    const courseSelect = await db.selectFrom('course')
         .where('course.id', '=', id)
         .selectAll()
         .executeTakeFirst();
+
+    if (courseSelect === undefined) {
+        throw error(404, 'Course not found: ' + id);
+    }
+
+    return courseSelect;
 }
 
 async function getFullSections(course_id:string): Promise<Section[]> {
-    const sectionSelects = await getCourseSections(course_id);
+    const sections = await getCourseSections(course_id);
 
-    if (!sectionSelects) {
-        error(404, 'Sections not found: ' + course_id);
-        return [];
-    }
+    console.log('sections');
+    console.log(sections);
 
-    let sections: Section[] = [];
-
-    sectionSelects.forEach(async (sectionSelect) => {
-        sections.push({ ...sectionSelect, activities: await getFullActivities(sectionSelect.id)})
-    });
+    const fullSections: Section[] = await Promise.all(sections.map(async (section) => {
+        return { ...section, activities: await getActivities(section.id)};
+    }));
     
+    return fullSections;
+}
+
+async function getCourseSections(course_id:string): Promise<Section[]> {
+    let sectionsSelects = await db.selectFrom('course_section')
+        .where('course_id', '=', course_id)
+        .innerJoin('section', 'section_id', 'section.id')
+        .select(['order', 'section.created_at', 'section.id', 'section.name'])
+        .orderBy('order asc')
+        .execute();
+
+    const sections = sectionsSelects.map((sectionSelect) => { return {...sectionSelect, activities:[]}});
+
     return sections;
 }
 
-async function getCourseSections(course_id:string): Promise<SectionSelect[] | undefined> {
-    const sections =  await db.selectFrom('course_section')
-        .where('course_id', '=', course_id)
-        .select(['section_id', 'order'])
-        .execute();
-
-    if (typeof sections == undefined) {
-        error(404, 'No sections found: ' + course_id);
-    } else if (!sections.length) {
-        return [];
-    }
-    
-    const sectionIds = sections
-        .filter((value) => { value.section_id })
-        .map((value) => { return value.section_id });
-
-
-    const sectionSelects = await db.selectFrom('section')
-        .where('section.id', 'in', sectionIds)
-        .selectAll()
-        .execute();
-
-    return sectionSelects;
-}
-
-async function getFullActivities(section_id: string): Promise<Activity[]> {
-    const activities = await db.selectFrom('section_activity')
+async function getActivities(section_id: string): Promise<Activity[]> {
+    const activities: Activity[] = await db.selectFrom('section_activity')
         .where('section_id', '=', section_id)
-        .select(['activity_id', 'order'])
+        .innerJoin('activity', 'activity.id', 'section_activity.activity_id')
+        .select(['order', 'activity.id', 'activity.name', 'activity.activity_type', 'activity.created_at'])
+        .orderBy('order asc')
         .execute();
-
-    if (!activities) {
-        error(404, 'Activities not found: ' + section_id);
-        return [];
-    }
-
-    const activityIds = activities
-        .filter((value) => { value.activity_id })
-        .map((value) => { return value.activity_id });
     
-    const activitySelects = await db.selectFrom('activity')
-        .where('id', 'in', activityIds)
-        .selectAll()
-        .execute();
-
-    if (!activitySelects) {
-        error(404, 'Activities not found: ' + section_id);
-        return [];
-    }
-
-    const videoActivities = activitySelects.filter((value) => {return value.activity_type == 'Video'})
-    const scormActivities = activitySelects.filter((value) => {return value.activity_type == 'Scorm'})
-
-    return [];
+    return activities;
 }

@@ -69,19 +69,6 @@ export const createTestCourse = function() : Course {
     return { sections: [s1,s2,s3], title: "course", isComplete: false, currentActivityId: 1, courseId: 1 };
 }
 
-export const createDefaultCourse = function() : Course {
-    return {courseId: -1, title:"", isComplete:false, sections:[], currentActivityId:-1};
-}
-
-export const createDefaultActivity = function() : Activity {
-    return {
-        activityId: -1, 
-        isComplete:false, 
-        title:"", 
-        data: {value: "<p>No Activity Loaded</p>", type: ActivityType.HTML}
-    };
-}
-
 export function findCurrentActivity(course: Course) : Activity {
     let firstActivity: Activity | undefined;
 

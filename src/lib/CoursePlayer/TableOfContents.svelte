@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
-	import type {Activity} from "./ActivityStructure";
+	import type {Activity} from '../Models/Course';
 	import { currentCourse, currentActivity } from './stores';
 
 	function changeActivity(activity: Activity) : void {
 		$currentActivity = activity;
-		$currentCourse.currentActivityId = activity.activityId;
 	}
 
-	function getTreeClassForActivity(activityId: number) {
+	function getTreeClassForActivity(id: string) {
 		let treeItemClass = "";
 
-		if (activityId == $currentActivity.activityId) {
+		if (id == $currentActivity.id) {
 			treeItemClass += " bg-primary-500";
 		}
 
@@ -24,16 +23,16 @@
 	{#each $currentCourse.sections as section}
 	
 	<TreeViewItem>
-		{section.title}
+		{section.name}
 		
 		<svelte:fragment slot="children">	
 			{#each section.activities as activity}
 			
 			<TreeViewItem 
-			class={getTreeClassForActivity(activity.activityId)} 
+			class={getTreeClassForActivity(activity.id)} 
 			on:click={() => {changeActivity(activity)}}>
 				<svelte:fragment slot="lead">(icon)</svelte:fragment>
-				{activity.title}
+				{activity.name}
 			</TreeViewItem>
 			
 			{/each}

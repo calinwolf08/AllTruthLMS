@@ -1,28 +1,43 @@
-import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect } from "$lib/kysely/kysely"
-import type { ActivityType } from "kysely-codegen"
-
-export function getEmptyCourse() {
-    return {
-        id: '',
-        name:'',
-        created_at: new Date(),
-        sections:[]
-    }
-}
+import type Scorm from "$lib/ActivityTypes/Scorm.svelte"
+import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect, ActivitySelect, SectionActivitySelect } from "$lib/kysely/kysely"
 
 export type Course = CourseSelect & {
     sections: Section[],
 }
 
 export type Section = SectionSelect & {
+    order: number | null,
     activities: Activity[]
 }
 
-export type Activity = {
-    id: string,
-    name: string,
-    activity_type: ActivityType
-}
+// Data field initialized as |undefined| and only fetched when needed in the Course Player
+export type Activity = Pick<SectionActivitySelect, 'order'> & ActivitySelect & {
+    data?: ScormActivity | VideoActivity
+};
 
 export type ScormActivity = ScormActivitySelect;
 export type VideoActivity = VideoActivitySelect;
+
+export enum ActivityType {
+    SCORM = "Scorm",
+    VIDEO = "Video",
+}
+
+export const createDefaultCourse = function() : Course {
+    return {
+        id: '',
+        name: '',
+        created_at: new Date(),
+        sections: []
+    };
+}
+
+export const createDefaultActivity = function() : Activity {
+    return {
+        id: '',
+        name: '',
+        created_at: new Date(),
+        order: -1,
+        activity_type: 'Scorm'
+    };
+}
