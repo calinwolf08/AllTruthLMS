@@ -5,6 +5,8 @@
 
 	function changeActivity(activity: Activity) : void {
 		$currentActivity = activity;
+		console.log('current activity');
+		console.log($currentActivity.id);
 	}
 
 	function getTreeClassForActivity(id: string) {

@@ -10,7 +10,6 @@
 	
 	import { DrawerController } from '$lib/DrawerController';
 	import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
-	import Header from '$lib/Header.svelte';
 		
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -25,5 +24,4 @@
 	<TableOfContents /> 
 </Drawer>
 
-<Header />
 <slot />
