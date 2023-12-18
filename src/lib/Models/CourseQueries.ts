@@ -28,7 +28,7 @@ async function getCourse(id:string): Promise<CourseSelect> {
         .executeTakeFirst();
 
     if (courseSelect === undefined) {
-        error(404, 'Course not found: ' + id);
+        throw error(404, 'Course not found: ' + id);
     }
 
     return courseSelect;
