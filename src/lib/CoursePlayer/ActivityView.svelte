@@ -14,7 +14,7 @@
         {@html $currentActivity.name }
     {:else if $currentActivity.activity_type == ActivityType.SCORM}
         <!-- <Scorm path={url.data.publicUrl}/> -->
-        <Scorm path={testUrl}/>
+        <Scorm path={$currentActivity.url}/>
         <!-- <img src={url.data.publicUrl}/> -->
     {:else}
         <p>No Activity Found</p>

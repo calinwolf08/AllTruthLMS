@@ -1,3 +1,4 @@
+import Scorm from "$lib/ActivityTypes/Scorm.svelte";
 import { db, type CourseSelect, type SectionSelect } from "$lib/kysely/kysely";
 import type { Course, Section, Activity, ScormActivity, VideoActivity } from "./Course";
 import { error } from "@sveltejs/kit";
@@ -35,10 +36,7 @@ async function getCourse(id:string): Promise<CourseSelect> {
 
 async function getFullSections(course_id:string): Promise<Section[]> {
     const sections = await getCourseSections(course_id);
-
-    console.log('sections');
-    console.log(sections);
-
+    
     const fullSections: Section[] = await Promise.all(sections.map(async (section) => {
         return { ...section, activities: await getActivities(section.id)};
     }));
@@ -60,12 +58,24 @@ async function getCourseSections(course_id:string): Promise<Section[]> {
 }
 
 async function getActivities(section_id: string): Promise<Activity[]> {
-    const activities: Activity[] = await db.selectFrom('section_activity')
-        .where('section_id', '=', section_id)
+    const scormActivities: ScormActivity[] = await db.selectFrom('section_activity')
         .innerJoin('activity', 'activity.id', 'section_activity.activity_id')
-        .select(['order', 'activity.id', 'activity.name', 'activity.activity_type', 'activity.created_at'])
-        .orderBy('order asc')
+        .where('section_id', '=', section_id)
+        .where('activity_type', '=', 'Scorm')
+        .innerJoin('scorm_activity', 'activity.id', 'scorm_activity.activity_id')
+        .select(['order', 'activity.id', 'activity.name', 'activity.activity_type', 'activity.created_at', 'scorm_activity.url'])
         .execute();
+
+    const videoActivities: VideoActivity[] = await db.selectFrom('section_activity')
+        .innerJoin('activity', 'activity.id', 'section_activity.activity_id')
+        .where('section_id', '=', section_id)
+        .where('activity_type', '=', 'Video')
+        .innerJoin('video_activity', 'activity.id', 'video_activity.activity_id')
+        .select(['order', 'activity.id', 'activity.name', 'activity.activity_type', 'activity.created_at', 'video_activity.url'])
+        .execute();
+
+    const activities: Activity[] = scormActivities.concat(videoActivities);
+    activities.sort((a, b) => { return a.order - b.order });
     
     return activities;
 }
