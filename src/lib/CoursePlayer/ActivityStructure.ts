@@ -86,6 +86,6 @@ export function findCurrentActivity(course: Course) : Activity {
         return firstActivity
     } else {
         alert("Course has no activities.");
-        throw redirect(302, "/");
+        redirect(302, "/");
     }
 }
