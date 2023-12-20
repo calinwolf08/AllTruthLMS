@@ -10,7 +10,7 @@
             <MenuButton/>
             <strong class="text-xl pl-6">AllTruth</strong>
             <p class="pl-8"><a href="/">Home</a></p>
-            <p class="pl-8"><a href="/admin">Admin</a></p>
+            <p class="pl-8"><a href="/dashboard">Dashboard</a></p>
         </div>
     </svelte:fragment>
 </AppBar>

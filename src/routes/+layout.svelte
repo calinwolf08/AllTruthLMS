@@ -8,8 +8,9 @@
 	import { storePopup } from '@skeletonlabs/skeleton';
 	import { initializeStores, Drawer, getDrawerStore } from '@skeletonlabs/skeleton';
 	
-	import { DrawerController } from '$lib/DrawerController';
+	import { DrawerController, DrawerId } from '$lib/DrawerController';
 	import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
+	import SectionCreator from '$lib/CourseCreator/SectionCreator.svelte';
 		
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -21,7 +22,12 @@
 </script>
 
 <Drawer>
-	<TableOfContents /> 
+	{#if $drawerStore.id == DrawerId.CourseContents}
+		<TableOfContents /> 
+	{:else if $drawerStore.id == DrawerId.AddSection}
+		<SectionCreator />
+	{/if}
+
 </Drawer>
 
 <slot />

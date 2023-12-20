@@ -13,8 +13,8 @@ export type Section = SectionSelect & {
 // Data field initialized as |undefined| and only fetched when needed in the Course Player
 export type Activity = ScormActivity | VideoActivity;
 
-export type ScormActivity = ActivitySelect & Pick<ScormActivitySelect, 'url'> & Pick<SectionActivitySelect, 'order'>;
-export type VideoActivity = ActivitySelect & Pick<VideoActivitySelect, 'url'> & Pick<SectionActivitySelect, 'order'>;
+export type ScormActivity = ScormActivitySelect & Pick<ActivitySelect, 'activity_type' | 'name'> & Pick<SectionActivitySelect, 'order'>;
+export type VideoActivity = VideoActivitySelect & Pick<ActivitySelect, 'activity_type' | 'name'> & Pick<SectionActivitySelect, 'order'>;
 
 export enum ActivityType {
     SCORM = "Scorm",
@@ -32,11 +32,12 @@ export const createDefaultCourse = function() : Course {
 
 export const createDefaultActivity = function() : Activity {
     return {
-        id: '',
-        name: '',
         created_at: new Date(),
-        order: -1,
+        id: '',
+        activity_id: '',
+        url: "",
         activity_type: 'Scorm',
-        url: ""
+        name: '',
+        order: -1,
     };
 }

@@ -5,7 +5,7 @@
 
 	import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
 	import ActivityView from '$lib/CoursePlayer/ActivityView.svelte';
-	import Header from '$lib/Header.svelte';
+	import Header from '$lib/CoursePlayer/Header.svelte';
 	import { currentActivity, currentCourse } from '$lib/CoursePlayer/stores';
 
     export let data: PageData;
@@ -18,16 +18,6 @@
 
 
 </script>
-
-<!-- <div class="drawer-container">
-	<Drawer>
-		<Content>
-			<p>In Drawer</p>
-		</Content>
-	</Drawer>
-</div>
-
-<ActivityView /> -->
 
 <AppShell slotSidebarLeft="bg-surface-500/50 w-0 lg:w-1/4 lg:min-w-[24rem]">
 	<svelte:fragment slot="header">

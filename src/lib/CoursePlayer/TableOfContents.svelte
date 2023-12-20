@@ -3,39 +3,31 @@
 	import type {Activity} from '../Models/Course';
 	import { currentCourse, currentActivity } from './stores';
 
-	function changeActivity(activity: Activity) : void {
+	let selectedSection = 0;
+	let selectedActivity = 0;
+
+	function changeActivity(activity: Activity, sectionIndex: number, activityIndex: number) : void {
 		$currentActivity = activity;
-		console.log('current activity');
-		console.log($currentActivity.id);
-	}
-
-	function getTreeClassForActivity(id: string) {
-		let treeItemClass = "";
-
-		if (id == $currentActivity.id) {
-			treeItemClass += " bg-primary-500";
-		}
-
-		return treeItemClass;
+		selectedSection = sectionIndex;
+		selectedActivity = activityIndex
 	}
 	
 </script>
 
 <TreeView open hover="hover:variant-soft-primary" class="py-4 px-0">
-	{#each $currentCourse.sections as section}
+	{#each $currentCourse.sections as section, sectionIndex}
 	
 	<TreeViewItem>
 		{section.name}
 		
 		<svelte:fragment slot="children">	
-			{#each section.activities as activity}
+			{#each section.activities as activity, activityIndex}
 			
-			<TreeViewItem 
-			class={getTreeClassForActivity(activity.id)} 
-			on:click={() => {changeActivity(activity)}}>
+			<TreeViewItem  class={sectionIndex == selectedSection && activityIndex == selectedActivity ? "bg-primary-500" : ""} 
+				on:click={() => {changeActivity(activity, sectionIndex, activityIndex)}}>
 				<svelte:fragment slot="lead">(icon)</svelte:fragment>
 				{activity.name}
-			</TreeViewItem>
+			</TreeViewItem> 
 			
 			{/each}
 		</svelte:fragment>

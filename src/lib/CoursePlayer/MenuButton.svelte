@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getContext, type ComponentConstructorOptions } from 'svelte';
-    import type {DrawerController} from '$lib/DrawerController';
+    import {DrawerId, type DrawerController} from '$lib/DrawerController';
 	import type { Course } from './ActivityStructure';
     import TableOfContents from './TableOfContents.svelte';
 
@@ -11,7 +11,7 @@
 
     function openDrawer() : void {
         const drawerSettings = {
-            id: "course-navigation",
+            id: DrawerId.CourseContents,
             meta: course
         }
         

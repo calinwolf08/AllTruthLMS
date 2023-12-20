@@ -63,7 +63,7 @@ async function getActivities(section_id: string): Promise<Activity[]> {
         .where('section_id', '=', section_id)
         .where('activity_type', '=', 'Scorm')
         .innerJoin('scorm_activity', 'activity.id', 'scorm_activity.activity_id')
-        .select(['order', 'activity.id', 'activity.name', 'activity.activity_type', 'activity.created_at', 'scorm_activity.url'])
+        .select(['order', 'activity.name', 'activity.activity_type', 'activity.created_at', 'scorm_activity.activity_id', 'scorm_activity.id', 'scorm_activity.url'])
         .execute();
 
     const videoActivities: VideoActivity[] = await db.selectFrom('section_activity')
@@ -71,7 +71,7 @@ async function getActivities(section_id: string): Promise<Activity[]> {
         .where('section_id', '=', section_id)
         .where('activity_type', '=', 'Video')
         .innerJoin('video_activity', 'activity.id', 'video_activity.activity_id')
-        .select(['order', 'activity.id', 'activity.name', 'activity.activity_type', 'activity.created_at', 'video_activity.url'])
+        .select(['order', 'activity.name', 'activity.activity_type', 'activity.created_at', 'video_activity.activity_id', 'video_activity.id', 'video_activity.url'])
         .execute();
 
     const activities: Activity[] = scormActivities.concat(videoActivities);

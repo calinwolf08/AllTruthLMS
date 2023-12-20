@@ -1,6 +1,11 @@
 
 import type { DrawerSettings, DrawerStore } from '@skeletonlabs/skeleton';
 
+export enum DrawerId {
+    CourseContents = "CourseContents",
+    AddSection = "AddSection"
+}
+
 export class DrawerController {
     private drawerStore: DrawerStore;
 

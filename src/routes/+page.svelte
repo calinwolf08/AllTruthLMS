@@ -10,6 +10,6 @@
 		<a class="btn btn-lg variant-filled" href="\course-player\{1}">Course 1</a>
 	</div>
 	<div class="space-y5 p-10">
-		<a class="btn btn-lg variant-filled" href="\admin">Admin</a>
+		<a class="btn btn-lg variant-filled" href="\dashboard">Dashboard</a>
 	</div>
 </div>
