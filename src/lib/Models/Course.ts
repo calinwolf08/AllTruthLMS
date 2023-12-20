@@ -1,12 +1,12 @@
 import type Scorm from "$lib/ActivityTypes/Scorm.svelte"
 import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect, ActivitySelect, SectionActivitySelect } from "$lib/kysely/kysely"
+import type { CourseSection } from "kysely-codegen"
 
 export type Course = CourseSelect & {
     sections: Section[],
 }
 
-export type Section = SectionSelect & {
-    order: number | null,
+export type Section = SectionSelect & Pick<CourseSection, 'order'> & {
     activities: Activity[]
 }
 
@@ -28,6 +28,16 @@ export const createDefaultCourse = function() : Course {
         created_at: new Date(),
         sections: []
     };
+}
+
+export const createDefaultSection = function() : Section {
+    return {
+        created_at: new Date(),
+        id: '',
+        name: '',
+        order: -1,
+        activities: []
+    }
 }
 
 export const createDefaultActivity = function() : Activity {

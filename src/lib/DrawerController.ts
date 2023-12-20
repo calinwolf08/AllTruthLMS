@@ -16,4 +16,8 @@ export class DrawerController {
     openDrawer(settings: DrawerSettings) : void {
         this.drawerStore.open(settings);
     }; 
+
+    closeDrawer() : void {
+        this.drawerStore.close();
+    }
 }

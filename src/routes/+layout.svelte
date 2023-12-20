@@ -21,11 +21,11 @@
 
 </script>
 
-<Drawer>
+<Drawer position={$drawerStore.position ?? 'left'}>
 	{#if $drawerStore.id == DrawerId.CourseContents}
 		<TableOfContents /> 
 	{:else if $drawerStore.id == DrawerId.AddSection}
-		<SectionCreator />
+		<SectionCreator meta={$drawerStore.meta}/>
 	{/if}
 
 </Drawer>

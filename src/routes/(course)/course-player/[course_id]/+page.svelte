@@ -16,7 +16,6 @@
 		$currentActivity = data.course.sections[0].activities[0];
 	}
 
-
 </script>
 
 <AppShell slotSidebarLeft="bg-surface-500/50 w-0 lg:w-1/4 lg:min-w-[24rem]">
