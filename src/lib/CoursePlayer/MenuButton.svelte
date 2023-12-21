@@ -1,10 +1,11 @@
 <script lang="ts">
     import { getContext, type ComponentConstructorOptions } from 'svelte';
-    import {DrawerId, type DrawerController} from '$lib/DrawerController';
+    import { DrawerId } from '$lib/UtilityTypes';
+    import { getDrawerStore } from '@skeletonlabs/skeleton';
 	import type { Course } from './ActivityStructure';
     import TableOfContents from './TableOfContents.svelte';
-
-    const drawerController : DrawerController = getContext('drawerController');
+    
+    const drawerStore = getDrawerStore();
     const course : Course = getContext('course');
     
     let button: HTMLButtonElement;
@@ -15,7 +16,7 @@
             meta: course
         }
         
-        drawerController.openDrawer(drawerSettings);
+        drawerStore.open(drawerSettings);
     }
 
 </script>

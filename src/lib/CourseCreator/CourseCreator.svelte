@@ -1,54 +1,95 @@
 <script lang="ts">
-	import { getContext } from "svelte";
-	import { type DrawerController, DrawerId } from "$lib/DrawerController";
-	import type { Course, Section } from "$lib/Models/Course";
+	import { DrawerId, ModalId } from "$lib/UtilityTypes";
+    import { getDrawerStore, getModalStore } from '@skeletonlabs/skeleton';
+    import type { DrawerSettings, ModalStore, ModalSettings } from '@skeletonlabs/skeleton';
+	import type { ActivityType, Course, Section, Activity } from "$lib/Models/Course";
     import { createDefaultCourse } from "$lib/Models/Course";
-	import { addNewCourse } from "./CourseApi";
-
+    
     let course: Course = createDefaultCourse();
-
-    let drawerController: DrawerController = getContext('drawerController');
+    
+    const drawerStore = getDrawerStore();
+    const modalStore = getModalStore();
 
     function addSection(section: Section) {
         course.sections.push(section);
         course.sections = course.sections;
 
-        drawerController.closeDrawer();
+        drawerStore.close();
     }
 
     function createNewSection() {
-        drawerController.openDrawer({
+        const drawerSettings: DrawerSettings = {
             id: DrawerId.AddSection,
             meta: {
                 addSection
             },
             position: 'right',
             width: 'w-full max-w-3xl'
-        })
+        };
+
+        drawerStore.open(drawerSettings);
     }
 
-    async function saveCourse() {
-        let data = await addNewCourse(course);
-        console.log('returned');
-        console.log(data);                                                       
+    function addActivity(activity: Activity, sIndex: number) {
+        let activities = course.sections[sIndex].activities;
+        activities.push(activity);
+        activities = activities;
+
+        drawerStore.close();
+    }
+
+    function createNewActivity(activityType: ActivityType, sIndex: number) {
+        const drawerSettings: DrawerSettings = {
+            id: DrawerId.AddActivity,
+            meta: {
+                addActivity,
+                sIndex,
+            },
+            position: 'right',
+            width: 'w-full max-w-3xl'
+        };
+
+        drawerStore.open(drawerSettings);
+    }
+
+    function chooseNewActivity(sIndex: number) {
+        const modalSettings: ModalSettings = {
+            type: 'component',
+            component: ModalId.PickActivityType,
+            meta: {
+                createNewActivity,
+                sIndex,
+            }
+        }
+
+        modalStore.trigger(modalSettings);
     }
 </script>
 
-<div class="text-right">
-    <button type="button" class="mt-5 btn btn-lg variant-filled-primary mb-5 mr-auto ml-0" on:click={saveCourse}>Save</button>
-</div>
+<form method="POST" action="/create-course">
+    <div class="text-right">
+        <button type="submit" class="mt-5 btn btn-lg variant-filled mb-5 mr-auto ml-0">Save</button>
+    </div>
+    
+    <label class="label max-w">
+        <span>Name</span>
+        <input bind:value={course.name} name="name" type="text" class="input" placeholder="Course Name" />
+    </label>
+    
+    <div class="py-10">
+        {#each course.sections as section, sIndex}
+            <input name={sIndex.toString()} type="hidden" bind:value={section.name}>
+            <h3 class="h3 py-4">{section.name}</h3>
+            
+            {#each section.activities as activity, aIndex}
+                <input name={sIndex + '.' + aIndex} type="hidden" bind:value={activity.name}>
+                <h4 class="h3 py-3">{activity.name}</h4>
+            {/each}
 
-<label class="label max-w">
-    <span>Name</span>
-    <input bind:value={course.name} type="text" class="input" placeholder="Course Name" />
-</label>
+            <button type="button" class="mt-5 btn btn-md variant-filled-primary" on:click={() => chooseNewActivity(sIndex)}>Add Activity</button>
+        {/each}
+    </div>
+    
+</form>
 
-<div class="py-10">
-    {#each course.sections as section}
-        <div class="py-4">
-            <h3 class="h3">{section.name}</h3>
-        </div>
-    {/each}
-</div>
-
-<button type="button" class="mt-5 btn btn-lg variant-filled-primary" on:click={createNewSection}>Add Section</button>
+<button type="button" class="mt-5 btn btn-lg variant-filled" on:click={createNewSection}>Add Section</button>
