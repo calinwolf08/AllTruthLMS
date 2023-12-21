@@ -1,6 +1,8 @@
 import { Kysely, PostgresDialect, type Selectable } from 'kysely';
 import type { Activity, DB, Course, ScormActivity, Section, CourseSection, SectionActivity, VideoActivity } from 'kysely-codegen';
-import { Pool } from 'pg';
+import pkg from 'pg';
+
+const { Pool } = pkg;
 
 import { DATABASE_URL } from '$env/static/private';
 
