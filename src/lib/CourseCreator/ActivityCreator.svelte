@@ -1,22 +1,20 @@
 <script lang="ts">
-	import { ActivityType, type Activity } from "$lib/Models/Course";
-	import type { DrawerSettings } from "@skeletonlabs/skeleton";
+	import { type Activity, createDefaultActivity } from "$lib/Models/Course";
 
     export let meta: {
         addActivity: (activity: Activity, sIndex: number) => void,
         sIndex: number,
     };
+
+    let activity = createDefaultActivity();
 </script>
 
-<div class="flex">
-    <label class="flex items-center space-x-2">
-        <input class="radio" type="radio" checked name="radio-direct" value="1" />
-        <p>{ActivityType.SCORM}</p>
+<div class="p-10">
+    
+    <label class="label pb-5">
+        <span>Name</span>
+        <input bind:value={activity.name} type="text" class="input" placeholder="Section Name" />
     </label>
-</div>
-<div class="flex">
-<label class="flex items-center space-x-2">
-    <input class="radio" type="radio" name="radio-direct" value="2" />
-    <p>{ActivityType.VIDEO}</p>
-</label>
+
+    <button class="btn btn-md variant-filled-primary" on:click={ () => {meta.addActivity(activity, meta.sIndex)}}>Save</button>
 </div>

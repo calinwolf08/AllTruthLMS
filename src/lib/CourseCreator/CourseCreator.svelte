@@ -31,10 +31,8 @@
     }
 
     function addActivity(activity: Activity, sIndex: number) {
-        let activities = course.sections[sIndex].activities;
-        activities.push(activity);
-        activities = activities;
-
+        course.sections[sIndex].activities.push(activity);
+        course = course;
         drawerStore.close();
     }
 
@@ -83,7 +81,7 @@
             
             {#each section.activities as activity, aIndex}
                 <input name={sIndex + '.' + aIndex} type="hidden" bind:value={activity.name}>
-                <h4 class="h3 py-3">{activity.name}</h4>
+                <h4 class="h4 py-3 pl-4">{activity.name}</h4>
             {/each}
 
             <button type="button" class="mt-5 btn btn-md variant-filled-primary" on:click={() => chooseNewActivity(sIndex)}>Add Activity</button>
