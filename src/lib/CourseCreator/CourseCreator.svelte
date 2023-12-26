@@ -41,6 +41,7 @@
             id: DrawerId.AddActivity,
             meta: {
                 addActivity,
+                activityType,
                 sIndex,
             },
             position: 'right',
