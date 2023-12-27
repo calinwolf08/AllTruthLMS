@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { type Activity, createDefaultActivity, ActivityType } from "$lib/Models/Course";
+	import ScormCreator from "./ScormCreator.svelte";
+    import TextInput from "./TextInput.svelte";
 
     export let meta: {
         addActivity: (activity: Activity, sIndex: number) => void,
@@ -13,16 +15,15 @@
 </script>
 
 <div class="p-10">
-    {#if activityType ==  ActivityType.SCORM }
-    <p>SCORM Activity</p>
-	{:else if activityType ==  ActivityType.VIDEO }
-    <p>Video Activity</p>
-	{/if}
+    <TextInput bind:value={activity.name} name="name" title="Name" placeholder="Activity Name"/>
     
-    <label class="label pb-5">
-        <span>Name</span>
-        <input bind:value={activity.name} type="text" class="input" placeholder="Section Name" />
-    </label>
+    <div class="my-10">
+        {#if activityType ==  ActivityType.SCORM }
+            <ScormCreator />
+        {:else if activityType ==  ActivityType.VIDEO }
+            <p>Video Activity</p>
+        {/if}
+    </div>
 
     <button class="btn btn-md variant-filled-primary" on:click={ () => {meta.addActivity(activity, meta.sIndex)}}>Save</button>
 </div>

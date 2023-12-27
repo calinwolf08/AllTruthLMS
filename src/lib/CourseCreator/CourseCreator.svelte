@@ -4,6 +4,7 @@
     import type { DrawerSettings, ModalStore, ModalSettings } from '@skeletonlabs/skeleton';
 	import type { ActivityType, Course, Section, Activity } from "$lib/Models/Course";
     import { createDefaultCourse } from "$lib/Models/Course";
+	import TextInput from "./TextInput.svelte";
     
     let course: Course = createDefaultCourse();
     
@@ -65,15 +66,12 @@
     }
 </script>
 
-<form method="POST" action="/create-course">
+<form method="POST" action="create-course?/saveCourse">
     <div class="text-right">
         <button type="submit" class="mt-5 btn btn-lg variant-filled mb-5 mr-auto ml-0">Save</button>
     </div>
     
-    <label class="label max-w">
-        <span>Name</span>
-        <input bind:value={course.name} name="name" type="text" class="input" placeholder="Course Name" />
-    </label>
+    <TextInput bind:value={course.name} name="name" title="Name" placeholder="Course Name"/>
     
     <div class="py-10">
         {#each course.sections as section, sIndex}
