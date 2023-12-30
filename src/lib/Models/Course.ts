@@ -21,7 +21,7 @@ export enum ActivityType {
     VIDEO = "Video",
 }
 
-export const createDefaultCourse = function() : Course {
+export const createDefaultCourse = function (): Course {
     return {
         id: '',
         name: '',
@@ -30,7 +30,7 @@ export const createDefaultCourse = function() : Course {
     };
 }
 
-export const createDefaultSection = function() : Section {
+export const createDefaultSection = function (): Section {
     return {
         created_at: new Date(),
         id: '',
@@ -40,7 +40,7 @@ export const createDefaultSection = function() : Section {
     }
 }
 
-export const createDefaultActivity = function() : Activity {
+export const createDefaultActivity = function (): Activity {
     return {
         created_at: new Date(),
         id: '',

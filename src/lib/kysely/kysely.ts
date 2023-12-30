@@ -7,12 +7,12 @@ const { Pool } = pkg;
 import { DATABASE_URL } from '$env/static/private';
 
 export const db = new Kysely<DB>({
-    dialect: new PostgresDialect({
-      pool: new Pool({
-        connectionString: DATABASE_URL
-      }),
+  dialect: new PostgresDialect({
+    pool: new Pool({
+      connectionString: DATABASE_URL
     }),
-  });
+  }),
+});
 
 export type CourseSelect = Selectable<Course>;
 export type CourseSectionSelect = Selectable<CourseSection>;

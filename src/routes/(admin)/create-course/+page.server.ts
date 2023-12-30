@@ -1,9 +1,13 @@
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { json } from '@sveltejs/kit';
 
-import type { Course } from '$lib/Models/Course';
-
+import { tmpdir } from 'os';
+import { join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
+// import JSZip from 'jszip';
+// import pako from 'pako';
+import {unzip} from 'unzipit';
+import { S3 } from 'aws-sdk';
 
 export const load = (async () => {
     return {};
@@ -11,20 +15,30 @@ export const load = (async () => {
 
 export const actions = {
 	uploadScorm: async (event) => {
-		// TODO log the user in
-        console.log("in form action");
-        console.log(event);
+        const data = await event.request.formData();
+        const file = await data.get('scormFile') as File;
+        
+        console.log("file: ", file, typeof file);
 
-        let data = await event.request.formData();
+        const uploadDir = join(tmpdir(), 'uploads');
 
-        console.log(data);
+        if (!existsSync(uploadDir)) {
+            mkdirSync(uploadDir);
+        }
+        
+        try {
+            let extractedFiles = await unzip(file);
+            console.log(extractedFiles);
+            
+        } catch (error) {
+            console.error('Error extracting zip file:', error);
+        }
 
         return {
             success: true
         };
 	},
 	saveCourse: async (event) => {
-		// TODO register the user
         console.log("in save course action");
         console.log(event);
 
