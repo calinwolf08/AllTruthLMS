@@ -48,6 +48,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.484.0",
     "@floating-ui/dom": "1.5.3",
     "@supabase/supabase-js": "^2.38.5",
     "aws-sdk": "^2.1528.0",
