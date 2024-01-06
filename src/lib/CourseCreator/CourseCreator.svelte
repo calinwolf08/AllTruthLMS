@@ -81,6 +81,7 @@
 			{#each section.activities as activity, aIndex}
 				<input name={sIndex + '.' + aIndex} type="hidden" bind:value={activity.name} />
 				<h4 class="h4 py-3 pl-4">{activity.name}</h4>
+				<p class="p py-3 pl-4">{activity.url}</p>
 			{/each}
 
 			<button
@@ -92,6 +93,4 @@
 	</div>
 </form>
 
-<button type="button" class="mt-5 btn btn-lg variant-filled" on:click={createNewSection}
-	>Add Section</button
->
+<button type="button" class="mt-5 btn btn-lg variant-filled" on:click={createNewSection}>Add Section</button>

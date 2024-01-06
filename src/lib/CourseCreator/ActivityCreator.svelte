@@ -12,6 +12,21 @@
 	let { addActivity, activityType, sIndex } = meta;
 
 	let activity = createDefaultActivity();
+	
+	$: disableSave = validateActivity(activity.name, activity.url);
+	
+	function validateActivity(name: string, url: string) {
+		console.log('validating:', name, url);
+
+		try {
+			const urlObj = new URL(url);
+		} catch (_) {
+			console.warn('invalid url:', url);
+			return true;
+		}
+
+        return name.length <= 0;
+    }
 </script>
 
 <div class="p-10">
@@ -19,16 +34,12 @@
 
 	<div class="my-10">
 		{#if activityType == ActivityType.SCORM}
-			<ScormCreator />
+			<ScormCreator bind:url={activity.url} />
 		{:else if activityType == ActivityType.VIDEO}
 			<p>Video Activity</p>
 		{/if}
 	</div>
 
-	<button
-		class="btn btn-md variant-filled-primary"
-		on:click={() => {
-			addActivity(activity, sIndex);
-		}}>Save</button
-	>
+	<button class="btn btn-md variant-filled-primary" 
+		disabled={disableSave} on:click={() => { addActivity(activity, sIndex); }}> Save </button >
 </div>

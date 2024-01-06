@@ -4,8 +4,6 @@ import type { PageServerLoad } from './$types';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-// import JSZip from 'jszip';
-// import pako from 'pako';
 import { unzip } from 'unzipit';
 import type { ZipEntry, ZipInfo } from 'unzipit';
 import { S3 } from 'aws-sdk';
