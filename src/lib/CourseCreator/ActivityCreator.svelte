@@ -16,8 +16,6 @@
 	$: disableSave = validateActivity(activity.name, activity.url);
 	
 	function validateActivity(name: string, url: string) {
-		console.log('validating:', name, url);
-
 		try {
 			const urlObj = new URL(url);
 		} catch (_) {
