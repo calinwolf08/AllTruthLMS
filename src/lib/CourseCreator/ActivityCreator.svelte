@@ -6,12 +6,14 @@
 	export let meta: {
 		addActivity: (activity: Activity, sIndex: number) => void;
 		activityType: ActivityType;
+		name: string;
 		sIndex: number;
 	};
 
-	let { addActivity, activityType, sIndex } = meta;
+	let { addActivity, activityType, name, sIndex } = meta;
 
 	let activity = createDefaultActivity();
+	activity.name = name;
 	
 	$: disableSave = validateActivity(activity.name, activity.url);
 	
