@@ -1,6 +1,4 @@
-import type { TreeViewNode } from "@skeletonlabs/skeleton";
 import { redirect } from "@sveltejs/kit";
-import type { HtmlTagDescriptor } from "vite";
 
 export enum ActivityType {
     SCORM = "SCORM",

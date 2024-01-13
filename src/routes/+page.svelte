@@ -1,15 +1,12 @@
 <!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 <script lang="ts">
 	import Header from "$lib/Header.svelte";
+	import { Button } from "flowbite-svelte";
 </script>
 
 <Header />
 
 <div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-5 p-10">
-		<a class="btn btn-lg variant-filled" href="\course-player\{1}">Course 1</a>
-	</div>
-	<div class="space-y5 p-10">
-		<a class="btn btn-lg variant-filled" href="\dashboard">Dashboard</a>
-	</div>
+	<Button class="bg-dark-blue-500 p-4 rounded-full m-10" href="\course-player\{1}">Course 1</Button>
+	<Button class="bg-dark-blue-500 p-4 rounded-full m-10" href="\dashboard">Dashboard</Button>
 </div>

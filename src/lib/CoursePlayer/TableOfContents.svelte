@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
+	// import { TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
 	import type {Activity} from '../Models/Course';
 	import { currentCourse, currentActivity } from './stores';
 
@@ -14,26 +14,26 @@
 	
 </script>
 
-<TreeView open hover="hover:variant-soft-primary" class="py-4 px-0">
-	{#each $currentCourse.sections as section, sectionIndex}
+<!-- <TreeView open hover="hover:variant-soft-primary" class="py-4 px-0">
+	{#each $currentcourse.sections as section, sectionindex}
 	
-	<TreeViewItem>
+	<treeviewitem>
 		{section.name}
 		
 		<svelte:fragment slot="children">	
-			{#each section.activities as activity, activityIndex}
+			{#each section.activities as activity, activityindex}
 			
-			<TreeViewItem  class={sectionIndex == selectedSection && activityIndex == selectedActivity ? "bg-primary-500" : ""} 
-				on:click={() => {changeActivity(activity, sectionIndex, activityIndex)}}>
+			<treeviewitem  class={sectionindex == selectedsection && activityindex == selectedactivity ? "bg-primary-500" : ""} 
+				on:click={() => {changeactivity(activity, sectionindex, activityindex)}}>
 				<svelte:fragment slot="lead">(icon)</svelte:fragment>
 				{activity.name}
-			</TreeViewItem> 
+			</treeviewitem> 
 			
 			{/each}
 		</svelte:fragment>
 		
-	</TreeViewItem>
+	</treeviewitem>
 	
-	{/each}
-</TreeView>
+	{/each} 
+</treeview> -->
 	
