@@ -36,9 +36,11 @@
 		sectionDrawerHidden = false;
 	}
 
-	function addActivity() {
-		course.sections[currenetSectionIdx].activities.push(createDefaultActivity());
-		course = course
+	function addActivity(sIndex: number) {
+		course.sections[sIndex].activities.push(createDefaultActivity());
+		// currentSection.activities.push(createDefaultActivity());
+		course = course;
+		console.log("here");
 	}
 
 	function updateActivity(currentActivity: Activity) {
@@ -59,21 +61,21 @@
 		<Button type="submit" class="mt-5 btn btn-lg variant-filled mb-5 mr-auto ml-0" >Save</Button>
 	</div>
 
-	<InputHeaderToggle tag="h2" textClass="text-4xl font-bold" name={course.name} bind:value={course.name} placeholder="Course Name"/>
+	<InputHeaderToggle tag="h2" textClass="text-2xl font-bold" name={course.name} bind:value={course.name} placeholder="Course Name"/>
 
-	<div>
-		{#each course.sections as section, sIndex}
-		<div class="my-5 p-8 bg-blue-100 rounded-xl">
-			<InputHeaderToggle name={sIndex.toString()} placeholder="Section Name" bind:value={section.name} showEditButton={true} editCallback={() => {openSectionDrawer(section)}}/>
+	{#each course.sections as section, sIndex}
+	<div class="my-3 p-4 bg-blue-100 rounded-xl">
+		<InputHeaderToggle tag="h3" name={sIndex.toString()} placeholder="Section Name" bind:value={section.name} showEditButton={true} editCallback={() => {openSectionDrawer(section)}}
+			layoutClass="mb-2"/>
 
-			{#each section.activities as activity, aIndex}
-				<InputHeaderToggle tag="h4" showEditButton={true} editCallback={() => {openActivityDrawer(activity, sIndex)}}  textClass="text-2xl font-bold" headerClass="ml-6 py-4" inputClass="ml-6 my-4" buttonClass="my-4" name={sIndex + '.' + aIndex} bind:value={activity.name} />
-			{/each}
-
-			<Button type="button" class="mt-5 btn btn-md variant-filled-primary" on:clickk={addActivity}>Add Activity</Button>
-		</div>
+		{#each section.activities as activity, aIndex}
+			<InputHeaderToggle tag="h4" placeholder="Activity Name" showEditButton={true} editCallback={() => {openActivityDrawer(activity, sIndex)}} 
+				textClass="text-lg" layoutClass="mb-2" headerClass="ml-6 " inputClass="ml-6 " buttonClass="" name={sIndex + '.' + aIndex} bind:value={activity.name} />
 		{/each}
+
+		<Button type="button" class="mt-5 btn btn-md variant-filled-primary" on:click={() => {addActivity(sIndex)} }>Add Activity</Button>
 	</div>
+	{/each}
 </form>
 
 <Button type="button" class="mt-5 btn btn-lg variant-filled" on:click={addSection}>Add Section</Button>

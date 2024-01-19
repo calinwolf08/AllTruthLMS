@@ -7,10 +7,11 @@ export let name = '';
 export let placeholder = '';
 export let value = '';
 export let tag: HeadingTag = 'h1';
-export let textClass = 'text-3xl font-bold';
+export let textClass = 'text-xl font-bold';
 export let headerClass = '';
 export let inputClass = '';
 export let buttonClass = '';
+export let layoutClass = '';
 export let showEditButton = false;
 export let editCallback = () => { if (showEditButton) { console.warn('editCallback should not be called if showEditButton is false')} };
 
@@ -39,23 +40,20 @@ function inputKeyDown(event: KeyboardEvent) {
 }
 </script>
 {#if isEditing}
-    <ButtonGroup class="w-full">
+    <ButtonGroup class="w-full {layoutClass}">
         <Input let:props  class="h-min py-0 {inputClass} {textClass}">
             <input {...props} name={name} type="text" placeholder="{placeholder}" use:focusInput bind:value={value} on:keydown={inputKeyDown} on:blur={stopEditing}/>
         </Input>
         <Button class="bg-dark-blue-500 text-white py-0 {buttonClass}" on:click={stopEditing}>Save</Button>
-        {#if showEditButton}
-        <Button class="bg-dark-blue-500 text-white py-0 {buttonClass}" on:click={editCallback}>Edit</Button>
-        {/if} 
     </ButtonGroup>
 {:else}
- <button type="button" class="w-full text-left my-0" on:click={startEditing}>
-    <div class="flex">
-        <Heading {tag} class="{headerClass} {textClass}">{value.length == 0 ? placeholder : value}</Heading>
+<div class="flex {layoutClass}">
+    <button type="button" class="w-full text-left {headerClass}" on:click={startEditing}>
+        <Heading {tag} class="{textClass}">{value.length == 0 ? placeholder : value}</Heading>
+    </button> 
 
-        {#if showEditButton}
-        <Button class="bg-dark-blue-500 text-white {buttonClass}" on:click={editCallback}>Edit</Button>
-        {/if}
-    </div>
-</button> 
+    {#if showEditButton}
+    <Button class="bg-dark-blue-500 text-white py-0 {buttonClass}" on:click={editCallback}>Edit</Button>
+    {/if}
+</div>
 {/if}
