@@ -16,13 +16,14 @@ export let showEditButton = false;
 export let editCallback = () => { if (showEditButton) { console.warn('editCallback should not be called if showEditButton is false')} };
 
 let isEditing = false;
+let isHovering = false
 
 const startEditing = () => {
     isEditing = true;
+    isHovering = false;
 };
 
 const stopEditing = () => {
-    console.log("stoping");
     isEditing = false;
 };
 
@@ -47,13 +48,13 @@ function inputKeyDown(event: KeyboardEvent) {
         <Button class="bg-dark-blue-500 text-white py-0 {buttonClass}" on:click={stopEditing}>Save</Button>
     </ButtonGroup>
 {:else}
-<div class="flex {layoutClass}">
-    <button type="button" class="w-full text-left {headerClass}" on:click={startEditing}>
+<button type="button" class="flex w-full {layoutClass}" on:mouseenter={() => {isHovering = true;} } on:mouseleave={() => {isHovering = false;} }>
+    <button type="button" class="w-max text-left {headerClass}" on:click={startEditing} >
         <Heading {tag} class="{textClass}">{value.length == 0 ? placeholder : value}</Heading>
     </button> 
 
-    {#if showEditButton}
-    <Button class="bg-dark-blue-500 text-white py-0 {buttonClass}" on:click={editCallback}>Edit</Button>
+    {#if showEditButton && isHovering}
+    <Button class="bg-dark-blue-500 text-white ml-6 py-0 {buttonClass}" on:click={editCallback} >Edit</Button>
     {/if}
-</div>
+</button>
 {/if}

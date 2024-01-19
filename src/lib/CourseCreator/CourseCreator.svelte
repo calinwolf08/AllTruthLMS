@@ -70,7 +70,7 @@
 
 		{#each section.activities as activity, aIndex}
 			<InputHeaderToggle tag="h4" placeholder="Activity Name" showEditButton={true} editCallback={() => {openActivityDrawer(activity, sIndex)}} 
-				textClass="text-lg" layoutClass="mb-2" headerClass="ml-6 " inputClass="ml-6 " buttonClass="" name={sIndex + '.' + aIndex} bind:value={activity.name} />
+				textClass="text-lg font-bold" layoutClass="mb-2" headerClass="ml-6 " inputClass="ml-6 " buttonClass="" name={sIndex + '.' + aIndex} bind:value={activity.name} />
 		{/each}
 
 		<Button type="button" class="mt-5 btn btn-md variant-filled-primary" on:click={() => {addActivity(sIndex)} }>Add Activity</Button>
