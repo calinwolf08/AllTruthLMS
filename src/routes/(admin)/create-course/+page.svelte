@@ -1,8 +1,7 @@
 <script lang="ts">
 	import CourseCreator from '$lib/CourseCreator/CourseCreator.svelte';
-import type { Course } from '$lib/Models/Course';
     import type { PageData } from './$types';
-    
+    import {Heading} from 'flowbite-svelte'; 
     export let data: PageData;
 
     let course = {
@@ -12,7 +11,7 @@ import type { Course } from '$lib/Models/Course';
 
 </script>
     <div class="m-auto max-w-5xl p-10">
-        <h1 class="h1 pb-8">Create Course</h1>
+        <Heading tag="h1">Create Course</Heading>
         <CourseCreator />
     </div>
 

@@ -1,23 +1,32 @@
 <script lang="ts">
+    import { Drawer, Button, CloseButton, Label, Input } from 'flowbite-svelte';
 	import { createDefaultSection, type Section } from "$lib/Models/Course";
-    import TextInput from "./TextInput.svelte";
-
-    export let meta: {
-        addSection: (section:Section) => void
+    import {sineIn} from 'svelte/easing';
+     
+    export let hidden = true;
+    export let section = createDefaultSection();
+    export let updateSection: (section: Section) => void;
+    
+    let transitionParams = {
+        x: 320,
+        duration: 200,
+        easing: sineIn,
     };
-
-	let section: Section = createDefaultSection();
 
     $: disableSave = validateSection(section.name);
 
     function validateSection(name: string) {
         return name.length <= 0;
     }
+
+    function saveSection() {
+        updateSection(section);
+        hidden = true;
+    }
 </script>
 
-<div class="p-10">
-    
-    <TextInput bind:value={section.name} name="name" title="Name" placeholder="Section Name"/>
-
-    <button class="btn btn-md variant-filled-primary mt-10" disabled={disableSave} on:click={ () => {meta.addSection(section)}}>Save</button>
-</div>    
+<Drawer class="p-10" width="w-1/2 max-w-3xl min-w-min" transitionType="fly" {transitionParams} bind:hidden={hidden} placement="right">
+    <Label class="my-5" for="name-input">Name</Label>
+    <Input class="my-5" id="name-input" bind:value={section.name} />
+    <Button class="my-5" color="primary" disabled={disableSave} on:click={saveSection}>Save</Button>
+</Drawer>

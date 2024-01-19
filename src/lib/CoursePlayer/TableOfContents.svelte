@@ -14,6 +14,7 @@
 	
 </script>
 
+
 <!-- <TreeView open hover="hover:variant-soft-primary" class="py-4 px-0">
 	{#each $currentcourse.sections as section, sectionindex}
 	

@@ -7,6 +7,9 @@ const config = {
   
     theme: {
       extend: {
+        fontFamily: {
+            Rubik: ['Rubik', 'serif']
+        },
         colors: {
             // flowbite-svelte
             primary: {

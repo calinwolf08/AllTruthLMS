@@ -8,7 +8,7 @@ import { unzip } from 'unzipit';
 import type { ZipEntry, ZipInfo } from 'unzipit';
 import { S3 } from 'aws-sdk';
 import { PutObjectCommand, CopyObjectCommand, S3Client, type CopyObjectCommandInput, type PutObjectCommandInput } from '@aws-sdk/client-s3';
-import { S3_ACCESS_KEY, S3_BUCKET, S3_REGION, S3_SECRET_KEY, S3_UNZIPPED_SCORM_FOLDER, S3_SCORM_SCRIPT_LOCATION, S3_SCORM_SCRIPT_NAME } from '$env/static/private';
+import { S3_ACCESS_KEY, S3_BUCKET, S3_REGION, S3_SECRET_KEY, S3_UNZIPPED_SCORM_FOLDER, S3_SCORM_SCRIPT_LOCATION, S3_SCORM_SCRIPT_NAME, S3_BASE_URL } from '$env/static/private';
 import type { S } from 'vitest/dist/types-198fd1d9';
 
 export const load = (async () => {
@@ -31,7 +31,7 @@ export const actions = {
         try {
             let extractedFiles = await unzip(file);
             const directory = file.name.split('.')[0];
-            url = await uploadScormToS3(extractedFiles, directory);
+            url = S3_BASE_URL + await uploadScormToS3(extractedFiles, directory);
         } catch (error) {
             console.error('Error extracting zip file:', error);
             success = false;
