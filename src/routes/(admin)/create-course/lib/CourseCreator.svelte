@@ -6,6 +6,7 @@
 	import SectionCreator from './SectionCreator.svelte';
 	import ActivityCreator from './ActivityCreator.svelte';
 	import InputHeaderToggle from './InputHeaderToggle.svelte';
+	import { setActivity, getActivity } from '$lib/context';
 
 	let course: Course = createDefaultCourse();
 
@@ -18,9 +19,12 @@
 	let sectionDrawerHidden = true;
 
 	// Pass this down in setContext as a store instead of binding all the way down
-	let activity = createDefaultActivity();
 	let activityDrawerHidden = true;
 	let currenetSectionIdx = -1;
+	let currentActivity: Activity;
+
+	setActivity();
+	const activity = getActivity();
 
 	function addSection() {
 		course.sections.push(createDefaultSection());
@@ -42,13 +46,14 @@
 		course = course;
 	}
 
-	function updateActivity(currentActivity: Activity) {
-		activity = currentActivity;
+	function updateActivity() {
+		course = course;
 	}
 
-	function openActivityDrawer(currentActivity: Activity, sIndex: number) {
+	function openActivityDrawer(curActivity: Activity, sIndex: number) {
 		currenetSectionIdx = sIndex;
-		activity = currentActivity;
+		currentActivity = curActivity;
+		$activity = currentActivity;
 		activityDrawerHidden = false;
 	}
 
@@ -80,4 +85,4 @@
 <Button type="button" class="mt-5 btn btn-lg variant-filled" on:click={addSection}>Add Section</Button>
 
 <SectionCreator bind:hidden={sectionDrawerHidden} bind:section {updateSection}/>
-<ActivityCreator bind:hidden={activityDrawerHidden} bind:activity {updateActivity}/>
+<ActivityCreator bind:hidden={activityDrawerHidden} {updateActivity}/>

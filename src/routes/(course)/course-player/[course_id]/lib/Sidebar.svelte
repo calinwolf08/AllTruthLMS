@@ -1,13 +1,16 @@
 <script lang='ts'>
 	import { Heading, A, Sidebar, SidebarDropdownItem, SidebarDropdownWrapper, SidebarGroup, SidebarWrapper } from 'flowbite-svelte';
-	import { currentActivity, currentCourse } from './stores';
+	import { currentCourse } from './stores';
     import type { Activity } from '$lib/Models/Course'; 
+    import { getActivity } from '$lib/context';
+
+    const activity = getActivity();
 
     let selectedSection = 0;
 	let selectedActivity = 0;
 
 	function changeActivity(activity: Activity, sectionIndex: number, activityIndex: number) : void {
-		$currentActivity = activity;
+		$activity = activity;
 		selectedSection = sectionIndex;
 		selectedActivity = activityIndex
 	}
