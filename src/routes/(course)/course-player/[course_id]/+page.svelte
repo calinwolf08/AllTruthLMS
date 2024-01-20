@@ -1,11 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-
-	// import TableOfContents from '$lib/CoursePlayer/TableOfContents.svelte';
-	// import ActivityView from '$lib/CoursePlayer/ActivityView.svelte';
-	import Header from '$lib/CoursePlayer/Header.svelte';
-	import { currentActivity, currentCourse } from '$lib/CoursePlayer/stores';
-	import Sidebar from '$lib/CoursePlayer/Sidebar.svelte';
+	import { currentActivity, currentCourse } from './lib/stores';
+	import Sidebar from './lib/Sidebar.svelte';
 
     export let data: PageData;
 	

@@ -1,4 +1,3 @@
-import Scorm from "$lib/ActivityTypes/Scorm.svelte";
 import { db, type CourseSelect, type SectionSelect } from "$lib/kysely/kysely";
 import type { Course, Section, Activity, ScormActivity, VideoActivity } from "./Course";
 import { error } from "@sveltejs/kit";
@@ -63,7 +62,9 @@ async function getActivities(section_id: string): Promise<Activity[]> {
         .where('section_id', '=', section_id)
         .where('activity_type', '=', 'Scorm')
         .innerJoin('scorm_activity', 'activity.id', 'scorm_activity.activity_id')
-        .select(['order', 'activity.name', 'activity.activity_type', 'activity.created_at', 'scorm_activity.activity_id', 'scorm_activity.id', 'scorm_activity.url'])
+        .select(['section_activity.order', 'activity.name', 'activity.activity_type', 'activity.created_at', 'scorm_activity.activity_id', 'scorm_activity.id', 'scorm_activity.scorm_data_id'])
+        .innerJoin('scorm_data', 'scorm_activity.scorm_data_id', 'scorm_data.id')
+        .select(['section_activity.order', 'activity.name', 'activity.activity_type', 'activity.created_at', 'scorm_activity.activity_id', 'scorm_activity.id', 'scorm_data.player_url', 'scorm_activity.scorm_data_id'])
         .execute();
 
     const videoActivities: VideoActivity[] = await db.selectFrom('section_activity')
@@ -74,7 +75,7 @@ async function getActivities(section_id: string): Promise<Activity[]> {
         .select(['order', 'activity.name', 'activity.activity_type', 'activity.created_at', 'video_activity.activity_id', 'video_activity.id', 'video_activity.url'])
         .execute();
 
-    const activities: Activity[] = scormActivities.concat(videoActivities);
+    const activities: Activity[] = [...scormActivities, ...videoActivities];
     activities.sort((a, b) => { return a.order - b.order });
     
     return activities;

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import CourseCreator from '$lib/CourseCreator/CourseCreator.svelte';
+	import CourseCreator from './lib/CourseCreator.svelte';
     import type { PageData } from './$types';
     import {Heading} from 'flowbite-svelte'; 
+
     export let data: PageData;
 
     let course = {

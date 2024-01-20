@@ -3,8 +3,9 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { P, Input, Label, Button } from 'flowbite-svelte';
+	import type { ScormActivity } from '$lib/Models/Course';
 
-	export let url = '';
+	export let activity: ScormActivity;
 
 	enum Result {
 		SUCCESS = "SUCCESS",
@@ -40,7 +41,7 @@
 
 				if ($page.form.success) {
 					formResult = Result.SUCCESS;
-					url =  $page.form.url;
+					activity.player_url =  $page.form.url;
 				} else {
 					formResult = Result.FAIL;
 				}
@@ -52,9 +53,9 @@
 	<Label for="scormFile">Upload Scorm Zip File</Label>
 	<Input class="input" type="file" name="scormFile" accept=".zip"/> 
 	{#if formResult == Result.SUCCESS } 
-		<P class="rounded-xl w-max px-3 mt-2 bg-green-400 text-white">Successfully uploaded scorm file: {url}</P>
+		<P class="rounded-xl w-max px-3 mt-2 bg-green-400 text-white">Successfully uploaded scorm file: {activity.player_url}</P>
 	{:else if formResult == Result.FAIL}
 	 	<P class="rounded-xl w-max px-3 mt-2 bg-red-400 text-white">Error uploading scorm file</P>
 	{/if}
-	<Button class="btn btn-sm my-4 variant-filled-primary" type="submit" disabled={url.length > 0}>Upload</Button>
+	<Button class="btn btn-sm my-4 variant-filled-primary" type="submit" disabled={activity.player_url}>Upload</Button>
 </form>

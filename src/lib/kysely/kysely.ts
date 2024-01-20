@@ -1,5 +1,5 @@
 import { Kysely, PostgresDialect, type Selectable } from 'kysely';
-import type { Activity, DB, Course, ScormActivity, Section, CourseSection, SectionActivity, VideoActivity } from 'kysely-codegen';
+import type { Activity, DB, Course, ScormActivity, Section, CourseSection, SectionActivity, VideoActivity, ScormData } from 'kysely-codegen';
 import pkg from 'pg';
 
 const { Pool } = pkg;
@@ -21,5 +21,8 @@ export type SectionSelect = Selectable<Section>;
 export type SectionActivitySelect = Selectable<SectionActivity>;
 
 export type ActivitySelect = Selectable<Activity>;
+
 export type ScormActivitySelect = Selectable<ScormActivity>;
+export type ScormDataSelect = Selectable<ScormData>;
+
 export type VideoActivitySelect = Selectable<VideoActivity>;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { CourseSelect } from "../kysely/kysely";
+    import type { CourseSelect } from "$lib/kysely/kysely";
 	import CourseCard from "./CourseCard.svelte";
 
     export let courses: CourseSelect[] = [];

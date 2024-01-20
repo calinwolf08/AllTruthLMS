@@ -17,6 +17,7 @@
 	let section = createDefaultSection();
 	let sectionDrawerHidden = true;
 
+	// Pass this down in setContext as a store instead of binding all the way down
 	let activity = createDefaultActivity();
 	let activityDrawerHidden = true;
 	let currenetSectionIdx = -1;
@@ -38,9 +39,7 @@
 
 	function addActivity(sIndex: number) {
 		course.sections[sIndex].activities.push(createDefaultActivity());
-		// currentSection.activities.push(createDefaultActivity());
 		course = course;
-		console.log("here");
 	}
 
 	function updateActivity(currentActivity: Activity) {

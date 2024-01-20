@@ -1,6 +1,6 @@
 <script lang="ts">
 	// import { TreeView, TreeViewItem } from '@skeletonlabs/skeleton';
-	import type {Activity} from '../Models/Course';
+	import type {Activity} from '$lib/Models/Course';
 	import { currentCourse, currentActivity } from './stores';
 
 	let selectedSection = 0;

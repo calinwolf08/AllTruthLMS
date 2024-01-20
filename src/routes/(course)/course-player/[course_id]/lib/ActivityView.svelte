@@ -1,11 +1,9 @@
 <script lang="ts">
-	import Scorm from "$lib/ActivityTypes/Scorm.svelte";
-	import { getContext } from "svelte";
+	import Scorm from "./Scorm.svelte";
 	import { currentActivity } from "./stores";
-    import { ActivityType } from "../Models/Course";
+    import { ActivityType } from "$lib/Models/Course";
 
     let testUrl = "https://all-truth-lms-storage.s3.us-west-2.amazonaws.com/Scorm/TestBridge/scorm_player.html";
-    // let testUrl = "/TestBridge/index_lms.html";
 
 </script>
 

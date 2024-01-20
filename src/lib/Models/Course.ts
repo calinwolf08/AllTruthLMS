@@ -1,6 +1,5 @@
-import type Scorm from "$lib/ActivityTypes/Scorm.svelte"
-import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect, ActivitySelect, SectionActivitySelect } from "$lib/kysely/kysely"
-import type { CourseSection } from "kysely-codegen"
+import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect, ActivitySelect, SectionActivitySelect, ScormDataSelect } from "$lib/kysely/kysely"
+import type { CourseSection, ScormData } from "kysely-codegen"
 
 export type Course = CourseSelect & {
     sections: Section[],
@@ -10,10 +9,9 @@ export type Section = SectionSelect & Pick<CourseSection, 'order'> & {
     activities: Activity[]
 }
 
-// Data field initialized as |undefined| and only fetched when needed in the Course Player
 export type Activity = ScormActivity | VideoActivity;
 
-export type ScormActivity = ScormActivitySelect & Pick<ActivitySelect, 'activity_type' | 'name'> & Pick<SectionActivitySelect, 'order'>;
+export type ScormActivity = ScormActivitySelect & Pick<ActivitySelect, 'activity_type' | 'name'> & Pick<SectionActivitySelect, 'order'> & Pick<ScormData, 'player_url'>;
 export type VideoActivity = VideoActivitySelect & Pick<ActivitySelect, 'activity_type' | 'name'> & Pick<SectionActivitySelect, 'order'>;
 
 export enum ActivityType {
@@ -45,9 +43,10 @@ export const createDefaultActivity = function (): Activity {
         created_at: new Date(),
         id: '',
         activity_id: '',
-        url: "",
         activity_type: 'Scorm',
         name: '',
         order: -1,
+        scorm_data_id: '',
+        player_url: '', 
     };
 }

@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import { Heading, A, Sidebar, SidebarDropdownItem, SidebarDropdownWrapper, SidebarGroup, SidebarWrapper } from 'flowbite-svelte';
-	import { currentActivity, currentCourse } from '$lib/CoursePlayer/stores';
+	import { currentActivity, currentCourse } from './stores';
     import type { Activity } from '$lib/Models/Course'; 
 
     let selectedSection = 0;
