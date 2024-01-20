@@ -1,9 +1,9 @@
 <script lang='ts'>
 	import { Heading, A, Sidebar, SidebarDropdownItem, SidebarDropdownWrapper, SidebarGroup, SidebarWrapper } from 'flowbite-svelte';
-	import { currentCourse } from './stores';
     import type { Activity } from '$lib/Models/Course'; 
-    import { getActivity } from '$lib/context';
+    import { getActivity, getCourse } from '$lib/context';
 
+    const course = getCourse();
     const activity = getActivity();
 
     let selectedSection = 0;
@@ -20,8 +20,8 @@
 	<SidebarWrapper class="bg-white">
 		<SidebarGroup>
             <A href="/" class="mb-10">Go back home</A>
-			<Heading tag='h3' class='mb-6'>{$currentCourse.name}</Heading>
-            {#each $currentCourse.sections as section, sectionIdx }
+			<Heading tag='h3' class='mb-6'>{$course.name}</Heading>
+            {#each $course.sections as section, sectionIdx }
                 {#if section.activities.length > 0}
                     <SidebarDropdownWrapper isOpen={true} label="{section.name}" class="bg-dark-blue-500 hover:bg-dark-blue-400 text-white">
                         {#each section.activities as activity, activityIdx }

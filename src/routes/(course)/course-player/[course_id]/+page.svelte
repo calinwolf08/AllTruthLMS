@@ -1,18 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { currentActivity, currentCourse } from './lib/stores';
 	import Sidebar from './lib/Sidebar.svelte';
-	import { getActivity, setActivity } from '$lib/context';
+	import { getActivity, getCourse, setActivity, setCourse } from '$lib/context';
 	import ActivityView from './lib/ActivityView.svelte';
     export let data: PageData;
 	
-	$currentCourse = data.course;
+	setCourse(data.course);
+	const course = getCourse();
 
 	setActivity();
 	const activity = getActivity();
 
-	if (data.course.sections.length > 0 && data.course.sections[0].activities.length > 0) {
-		$activity = data.course.sections[0].activities[0];
+	if ($course.sections.length > 0 && $course.sections[0].activities.length > 0) {
+		$activity = $course.sections[0].activities[0];
 	}
 
 </script>

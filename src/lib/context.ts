@@ -1,12 +1,22 @@
 import { writable, type Writable } from "svelte/store";
 import { getContext, setContext } from "svelte";
-import { type Activity, type ScormActivity, createDefaultActivity } from "$lib/Models/Course";
+import { type Course, type Activity, type ScormActivity, createDefaultCourse, createDefaultActivity } from "$lib/Models/Course";
 
+type CourseContext = Writable<Course>;
 type ActivityContext = Writable<Activity>; 
 type ScormContext = Writable<ScormActivity>;
 
+export function setCourse(course: Course) {
+    const courseStore = writable<Course>(course);
+    setContext('course', courseStore);
+}
+
+export function getCourse(): CourseContext {
+    return getContext<CourseContext>('course');
+}
+
 export function setActivity() {
-    let activity = writable<Activity>(createDefaultActivity());
+    const activity = writable<Activity>(createDefaultActivity());
     setContext('activity', activity);
 }
 
