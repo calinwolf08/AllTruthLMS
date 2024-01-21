@@ -1,5 +1,5 @@
-import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect, ActivitySelect, SectionActivitySelect, ScormDataSelect } from "$lib/kysely/kysely"
-import type { CourseSection, ScormData } from "kysely-codegen"
+import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect, ActivitySelect, SectionActivitySelect } from "$lib/kysely/kysely"
+import type { CourseSection, ScormData, ActivityType } from "kysely-codegen"
 
 export type Course = CourseSelect & {
     sections: Section[],
@@ -9,15 +9,25 @@ export type Section = SectionSelect & Pick<CourseSection, 'order'> & {
     activities: Activity[]
 }
 
-export type Activity = ScormActivity | VideoActivity;
-
-export type ScormActivity = ScormActivitySelect & Pick<ActivitySelect, 'activity_type' | 'name'> & Pick<SectionActivitySelect, 'order'> & Pick<ScormData, 'player_url'>;
-export type VideoActivity = VideoActivitySelect & Pick<ActivitySelect, 'activity_type' | 'name'> & Pick<SectionActivitySelect, 'order'>;
-
-export enum ActivityType {
-    SCORM = "Scorm",
-    VIDEO = "Video",
+type ActivityBase = {
+    created_at: Date,
+    id: string,
+    activity_id: string,
+    activity_type: ActivityType,
+    name: string,
+    order: number,
 }
+
+export type ScormActivity = ActivityBase & {
+    scorm_data_id: string | null, 
+    player_url: string,
+}
+
+export type VideoActivity = ActivityBase & {
+    url: string
+}
+
+export type Activity = ScormActivity | VideoActivity;
 
 export const createDefaultCourse = function (): Course {
     return {
@@ -43,7 +53,7 @@ export const createDefaultActivity = function (): Activity {
         created_at: new Date(),
         id: '',
         activity_id: '',
-        activity_type: 'Scorm',
+        activity_type: "Scorm", 
         name: '',
         order: -1,
         scorm_data_id: '',

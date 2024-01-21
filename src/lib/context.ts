@@ -4,7 +4,7 @@ import { type Course, type Activity, type ScormActivity, createDefaultCourse, cr
 
 type CourseContext = Writable<Course>;
 type ActivityContext = Writable<Activity>; 
-type ScormContext = Writable<ScormActivity>;
+export type ScormContext = Writable<ScormActivity>;
 
 export function setCourse(course: Course) {
     const courseStore = writable<Course>(course);

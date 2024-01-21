@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Activity, createDefaultActivity, ActivityType, type ScormActivity, type VideoActivity } from '$lib/Models/Course';
+	import type { Activity, ScormActivity, VideoActivity } from '$lib/Models/Course';
 	import { getActivity } from '$lib/context';
 	import ScormCreator from './ScormCreator.svelte';
 	import { Drawer, Input, Label, Button } from 'flowbite-svelte';
@@ -20,10 +20,10 @@
 	
 	function isActivityValid(activity: Activity) {
 		try {
-			if (activity.activity_type == ActivityType.SCORM) {
+			if (activity.activity_type == "Scorm") {
 				const scormActivity = activity as ScormActivity;
 				const urlObj = new URL(scormActivity.player_url ?? '');
-			} else if (activity.activity_type == ActivityType.VIDEO) {
+			} else if (activity.activity_type == "Video") {
 				const videoActivity = activity as VideoActivity;
 				const urlObj = new URL(videoActivity.url);
 			} else {
@@ -48,7 +48,7 @@
 	<Label class="mb-4">Activity Name</Label>
 	<Input class="mb-4" bind:value={$activity.name} name="name" title="Name" placeholder="Activity Name" />
 
-	{#if $activity.activity_type == ActivityType.SCORM}
+	{#if $activity.activity_type == "Scorm"}
 		<ScormCreator />
 	{/if}
 

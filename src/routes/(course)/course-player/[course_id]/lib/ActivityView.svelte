@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Scorm from "./Scorm.svelte";
-    import { ActivityType, type Activity, type ScormActivity } from "$lib/Models/Course";
+    import type { Activity, ScormActivity } from "$lib/Models/Course";
     import { getActivity } from "$lib/context";
 
     let testUrl = "https://all-truth-lms-storage.s3.us-west-2.amazonaws.com/Scorm/TestBridge/scorm_player.html";
@@ -9,7 +9,7 @@
     console.log('activity:', activity);
 
     function getScormUrl(activity: Activity) {
-        if (activity.activity_type != ActivityType.SCORM) {
+        if (activity.activity_type != "Scorm") {
             console.warn('Called from a non scorm activity: ', activity.activity_type);
 
             return '';
@@ -24,9 +24,9 @@
 </script>
 
 <div class="flex flex-col h-full w-full bg-white text-black">
-    {#if $activity.activity_type == ActivityType.VIDEO}
+    {#if $activity.activity_type == "Video"}
         {@html $activity.name }
-    {:else if $activity.activity_type == ActivityType.SCORM}
+    {:else if $activity.activity_type == "Scorm"}
         <Scorm path={getScormUrl($activity)}/>
     {:else}
         <p>No Activity Found</p>

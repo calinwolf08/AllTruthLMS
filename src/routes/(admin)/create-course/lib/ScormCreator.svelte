@@ -2,10 +2,16 @@
 	import { page } from '$app/stores';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { P, Input, Label, Button } from 'flowbite-svelte';
-	import { getScormActivity } from '$lib/context';
+	import { Input, Label, Button, Badge } from 'flowbite-svelte';
+	import { getActivity, type ScormContext } from '$lib/context';
 
-	const activity = getScormActivity();
+	const baseActivity = getActivity();
+	
+	if ($baseActivity.activity_type != "Scorm" || !("player_url" in $baseActivity)) {
+		throw Error("Expected Scorm Activity Type");	
+	}
+
+	const activity = baseActivity as ScormContext;
 
 	enum Result {
 		SUCCESS = "SUCCESS",
@@ -14,19 +20,8 @@
 	};
 
 	let formResult = Result.EMPTY;
-
 	let inputForm: HTMLFormElement;
 
-	async function onChangeHandler(e: Event) {
-		const files = (e.target as HTMLInputElement)?.files;
-
-		if (!files?.length) {
-			return;
-		}
-
-		inputForm.submit();
-	}
-	
 	const submitScorm: SubmitFunction = ({ formElement, formData, action, cancel }) => {
 		const file = formData.get("scormFile") as File|null;
 
@@ -50,12 +45,13 @@
 	}
 </script>
 <form bind:this={inputForm} method="POST" enctype="multipart/form-data" action="?/uploadScorm" use:enhance={submitScorm}>
+	<!-- Add Input field for the ScormId name here. On upload it should update the table as well as return the player_url-->
 	<Label for="scormFile">Upload Scorm Zip File</Label>
 	<Input class="input" type="file" name="scormFile" accept=".zip"/> 
 	{#if formResult == Result.SUCCESS } 
-		<P class="rounded-xl w-max px-3 mt-2 bg-green-400 text-white">Successfully uploaded scorm file: {$activity.player_url}</P>
+		<Badge color="green">Successfully uploaded scorm file: {$activity.player_url}</Badge>
 	{:else if formResult == Result.FAIL}
-	 	<P class="rounded-xl w-max px-3 mt-2 bg-red-400 text-white">Error uploading scorm file</P>
+	 	<Badge color="red">Error uploading scorm file</Badge>
 	{/if}
 	<Button class="btn btn-sm my-4 variant-filled-primary" type="submit" disabled={$activity.player_url}>Upload</Button>
 </form>
