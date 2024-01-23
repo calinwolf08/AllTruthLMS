@@ -5,7 +5,7 @@
     export let courses: CourseSelect[] = [];
 </script>
 
-<div class="course-list">
+<div class="grid grid-cols-3 gap-5">
     {#each courses as course (course.id)}
         <CourseCard name={course.name} id={course.id} />
     {/each}

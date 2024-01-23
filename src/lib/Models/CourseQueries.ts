@@ -1,6 +1,16 @@
-import { db, type CourseSelect, type SectionSelect } from "$lib/kysely/kysely";
+import { db, type CourseSelect, type SectionSelect, type ScormDataSelect } from "$lib/kysely/kysely";
 import type { Course, Section, Activity, ScormActivity, VideoActivity } from "./Course";
 import { error } from "@sveltejs/kit";
+
+export async function getAllScorm(): Promise<ScormDataSelect[]> {
+    let scormData = await db.selectFrom('scorm_data').selectAll().execute();
+
+    if (!scormData) {
+        error(404, "scormData not found.");
+    }
+
+    return scormData;
+}
 
 export async function getAllCourses(): Promise<CourseSelect[]> {
     let courses = await db.selectFrom('course').selectAll().execute();
