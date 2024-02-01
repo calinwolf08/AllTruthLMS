@@ -1,5 +1,5 @@
-import type { CourseSelect, ScormActivitySelect, SectionSelect, VideoActivitySelect, ActivitySelect, SectionActivitySelect } from "$lib/kysely/kysely"
-import type { CourseSection, ScormData, ActivityType } from "kysely-codegen"
+import type { CourseSelect, SectionSelect } from "$lib/kysely/kysely"
+import type { CourseSection, ActivityType } from "kysely-codegen"
 
 export type Course = CourseSelect & {
     sections: Section[],

@@ -26,3 +26,4 @@ export type ScormActivitySelect = Selectable<ScormActivity>;
 export type ScormDataSelect = Selectable<ScormData>;
 
 export type VideoActivitySelect = Selectable<VideoActivity>;
+

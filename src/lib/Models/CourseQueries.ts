@@ -87,6 +87,6 @@ async function getActivities(section_id: string): Promise<Activity[]> {
 
     const activities: Activity[] = [...scormActivities, ...videoActivities];
     activities.sort((a, b) => { return a.order - b.order });
-    
+
     return activities;
 }

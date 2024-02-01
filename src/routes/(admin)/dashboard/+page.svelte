@@ -19,5 +19,3 @@
         <CourseList {courses} />
     </div>
 </div>
-
-
